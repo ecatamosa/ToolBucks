@@ -28,14 +28,16 @@ function onClick() {
           <h1>Vue Practice</h1>
           <v-row>
             <v-col cols="12" md="6" class="mx-auto">
-              <v-card class="mx-auto" prepend-icon="mdi-account" subtitle="Login Form" width="400" image="/images/bg-card.jpg" elevation="20">
+              <v-card class="mx-auto" prepend-icon="mdi-account" subtitle="Login Form" width="400" elevation="20">
                 <template v-slot:title>
                   <span class="font-weight-black">Borrowing Tools</span>
                 </template>
 
                 <v-card-text class="bg-surface-light pt-4">
                   <v-form fast-fail @submit.prevent>
-                    <v-text-field label="Email" variant="outlined"></v-text-field>
+                    <v-text-field label="Firstname" variant="outlined"></v-text-field>
+
+                    <v-text-field label="Lastname" variant="outlined"></v-text-field>
 
                     <v-text-field
                       label="Password"
@@ -43,13 +45,19 @@ function onClick() {
                       variant="outlined"
                     ></v-text-field>
 
-                    <v-btn class="mt-2" type="submit" prepend-icon="mdi-login" block>Submit</v-btn>
+                    <v-text-field
+                      label="Password Confirmation"
+                      type="password"
+                      variant="outlined"
+                    ></v-text-field>
+
+                    <v-btn class="mt-2" type="submit" prepend-icon="mdi-account" block>Submit</v-btn>
                   </v-form>
-                  <v-divider class="my-4"></v-divider>
-                  <h4 class="text-center">
-                    Don't have an account?
-                    <RouterLink class="text-primary" to="/register">Click here to Register!</RouterLink>
-                  </h4>
+
+                  <v-divider class="my-5"></v-divider>
+
+                  <h5 class="text-center">Already have an account? <RouterLink class="text-primary" to="/login">Click here to Login</RouterLink> </h5>
+
                 </v-card-text>
               </v-card>
             </v-col>
