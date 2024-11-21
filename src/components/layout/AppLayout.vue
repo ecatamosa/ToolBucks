@@ -13,7 +13,6 @@ function onClick() {
   <v-responsive class="border rounded">
     <v-app :theme="theme">
       <v-app-bar class="px-3" color="grey-darken-4">
-        <v-img src="/images/tblogo.png" :width="mobile ? '100%' : '75%'"></v-img>
         <v-spacer></v-spacer>
 
         <v-btn

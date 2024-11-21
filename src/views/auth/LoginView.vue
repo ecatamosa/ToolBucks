@@ -10,9 +10,9 @@ const { mobile } = useDisplay()
     <template #content>
       <v-row>
         <v-col cols="12" md="6" class="mx-auto">
-          <v-card class="mx-auto" elevation="20">
-            <v-card-title align="center">
-              <v-img src="/images/tblogo.png" :width="mobile ? '100%' : '75%'"></v-img>
+          <v-card class="mx-auto" elevation="0" max-width="600">
+            <v-card-title class="text-center">
+              <v-img class="mx-auto" src="/images/tblogo.png" :width="mobile ? '85%' : '75%'"></v-img>
               <h2 class="font-weight-bold">Login</h2>
             </v-card-title>
 
