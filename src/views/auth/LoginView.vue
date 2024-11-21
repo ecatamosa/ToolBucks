@@ -10,9 +10,9 @@ import { useDisplay } from 'vuetify'
     <template #content>
       <v-row>
         <v-col cols="12" md="6" class="mx-auto ">
-          <v-card class="mx-auto"   image="/images/bg-card.jpg" elevation="20">
-            <v-card-title  align="center" class="pt-5 ">
-              <v-img src="/images/logo.jpg" :width="mobile ? '75%' :'25%'"></v-img>
+          <v-card class="mx-auto" elevation="20">
+            <v-card-title  align="center">
+              <v-img src="/images/tblogo.png" :width="mobile ? '100%' :'75%'"></v-img>
               <h2 class="font-weight-black">Login</h2>
             </v-card-title>
 
