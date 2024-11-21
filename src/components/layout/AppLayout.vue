@@ -9,16 +9,16 @@ function onClick() {
 </script>
 
 <template>
-    <v-responsive class="border rounded">
+    <v-responsive class="border rounded ">
       <v-app :theme="theme">
-        <v-app-bar class="px-3" color="grey-darken-4"
+        <v-app-bar class="px-3" color="deep-orange-accent-4"
           >x
           <v-spacer></v-spacer>
   
           <v-btn
             :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
             text="Toggle Theme"
-            slim
+            thick
             @click="onClick"
           ></v-btn>
         </v-app-bar>
@@ -29,7 +29,7 @@ function onClick() {
           </v-container>
       </v-main>
 
-      <v-footer color="grey-darken-4" border app>2024 - Vue Practice</v-footer>
+      <v-footer color="deep-orange-accent-4" border app>2024 - Vue Practice</v-footer>
     </v-app>
   </v-responsive>
 </template>
