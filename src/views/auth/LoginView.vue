@@ -13,7 +13,7 @@ import { useDisplay } from 'vuetify'
           <v-card class="mx-auto" elevation="20">
             <v-card-title  align="center">
               <v-img src="/images/tblogo.png" :width="mobile ? '100%' :'75%'"></v-img>
-              <h2 class="font-weight-black">Login</h2>
+              <h2 class="font-weight-bold">Login</h2>
             </v-card-title>
 
             <v-card-text class="bg-surface-light pt-4">
