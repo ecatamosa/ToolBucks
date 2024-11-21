@@ -22,21 +22,10 @@ const { mobile } = useDisplay()
 
                 <v-text-field label="Lastname" variant="outlined"></v-text-field>
 
-                <v-text-field
-                  hide-details="auto"
-                  label="Email address"
-                  placeholder=""
-                  type="email"
-                  variant="outlined"
-                ></v-text-field>
+                <v-text-field label="Email address" type="email" variant="outlined"></v-text-field>
 
-                <v-text-field
-                  hint="Enter your password to access this website"
-                  label="Password"
-                  type="password"
-                  variant="outlined"
-                ></v-text-field>
-                
+                <v-text-field label="Password" type="password" variant="outlined"></v-text-field>
+
                 <v-text-field
                   label="Password Confirmation"
                   type="password"
@@ -44,11 +33,12 @@ const { mobile } = useDisplay()
                 ></v-text-field>
 
                 <v-btn
-                  class="mt-2"
+                  class="mt-2 color-primary"
                   type="submit"
                   prepend-icon="mdi-account-plus"
                   block
-                  color="grey-darken-4"
+                  color="primary"
+                  variant="outlined"
                   >Register</v-btn
                 >
               </v-form>
