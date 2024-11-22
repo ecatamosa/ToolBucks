@@ -16,7 +16,8 @@ function onClick() {
         <v-spacer></v-spacer>
 
         <v-btn
-          :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+          :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+          variant="elevated"
           thick
           @click="onClick"
         ></v-btn>
@@ -29,7 +30,7 @@ function onClick() {
       </v-main>
 
       <v-footer class="font-weight-black" color="grey-darken-4" border app
-        >2024 - ToolBucks</v-footer
+        >© 2024 - ToolBucks</v-footer
       >
     </v-app>
   </v-responsive>
