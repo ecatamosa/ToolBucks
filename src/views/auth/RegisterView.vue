@@ -13,7 +13,7 @@ const { mobile } = useDisplay()
           <v-card class="mx-auto text-center" elevation="20">
             <v-card-title class="text-center">
               <v-img class="mx-auto" src="/images/tblogo.png" :width="mobile ? '80%' : '50%'"></v-img>
-              <h3 class="font-weight-black">Register</h3>
+              <h3 class="font-weight-bold">Register Form</h3>
             </v-card-title>
 
             <v-card-text class="bg-surface-light pt-4">
