@@ -34,6 +34,7 @@ const { mobile } = useDisplay()
 
                 <v-btn
                   class="mt-2"
+                  height="48"
                   type="submit"
                   prepend-icon="mdi-account-plus"
                   block

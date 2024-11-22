@@ -31,8 +31,9 @@ const { mobile } = useDisplay()
                   type="submit"
                   prepend-icon="mdi-login"
                   block
-                  color="orange"
                   variant="outlined"
+                  color="orange"
+                  height="48"
                   >Login</v-btn
                 >
               </v-form>
