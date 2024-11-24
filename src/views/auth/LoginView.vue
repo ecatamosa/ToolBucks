@@ -40,7 +40,7 @@ const { mobile } = useDisplay()
               <v-divider class="my-4"></v-divider>
               <h5 class="text-center">
                 Don't have an account?
-                <RouterLink class="text-grey" to="/register">Click here to Register!</RouterLink>
+                <RouterLink class="text-grey text-decoration-none" to="/register">Click here to Register!</RouterLink>
               </h5>
             </v-card-text>
           </v-card>

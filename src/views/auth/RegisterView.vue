@@ -48,7 +48,7 @@ const { mobile } = useDisplay()
 
               <h5 class="text-center">
                 Already have an account?
-                <RouterLink class="text-grey" to="/login">Click here to Login</RouterLink>
+                <RouterLink class="text-grey text-decoration-none" to="/login">Click here to Login</RouterLink>
               </h5>
             </v-card-text>
           </v-card>
