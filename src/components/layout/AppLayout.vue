@@ -10,7 +10,7 @@ function onClick() {
 </script>
 
 <template>
-  <v-responsive class="border rounded">
+  <v-responsive class="rounded">
     <v-app :theme="theme">
       <v-app-bar class="px-3" color="grey-darken-4">
         <v-spacer></v-spacer>
@@ -24,9 +24,9 @@ function onClick() {
       </v-app-bar>
 
       <v-main>
-        <v-container>
+        
           <slot name="content"></slot>
-        </v-container>
+        
       </v-main>
 
       <v-footer class="font-weight-black" color="grey-darken-4" border app
