@@ -2,6 +2,7 @@
 import AppLayout from '@/components/layout/AppLayout.vue'
 import { useDisplay } from 'vuetify'
 import { ref } from 'vue'
+
 const { mobile } = useDisplay()
 const visible = ref(false)
 </script>
@@ -24,7 +25,7 @@ const visible = ref(false)
             <v-card-text class="bg-surface-light pt-4">
               <v-divider></v-divider>
 
-              <v-form fast-fail @submit.prevent>
+              <v-form  fast-fail @submit.prevent="">
                 <v-text-field
                   density="compact"
                   placeholder="Email address"
