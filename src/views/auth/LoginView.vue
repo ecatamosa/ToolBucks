@@ -1,10 +1,12 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
+import LoginForm from '@/components/auth/LoginForm.vue';
 import { useDisplay } from 'vuetify'
-import { ref } from 'vue'
+
+
 
 const { mobile } = useDisplay()
-const visible = ref(false)
+
 </script>
 
 <template>
@@ -12,7 +14,7 @@ const visible = ref(false)
     <template #content>
       <v-row>
         <v-col cols="12" md="6" class="mx-auto">
-          <v-card class="mx-auto" elevation="0" max-width="600">
+          <v-card class="mx-auto" elevation="20" max-width="600">
             <v-card-title class="text-center">
               <v-img
                 class="mx-auto"
@@ -25,34 +27,9 @@ const visible = ref(false)
             <v-card-text class="bg-surface-light pt-4">
               <v-divider></v-divider>
 
-              <v-form  fast-fail @submit.prevent="">
-                <v-text-field
-                  density="compact"
-                  placeholder="Email address"
-                  prepend-inner-icon="mdi-email-outline"
-                  variant="outlined"
-                ></v-text-field>
+              <LoginForm></LoginForm>
 
-                <v-text-field
-                  :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-                  :type="visible ? 'text' : 'password'"
-                  density="compact"
-                  placeholder="Enter your password"
-                  prepend-inner-icon="mdi-lock-outline"
-                  variant="outlined"
-                  @click:append-inner="visible = !visible"
-                ></v-text-field>
 
-                <v-btn
-                  class="mt-2"
-                  type="submit"
-                  prepend-icon="mdi-login"
-                  block
-                  color="deep-orange-darken-2"
-                  variant="outlined"
-                  >Login</v-btn
-                >
-              </v-form>
               <v-divider class="my-4"></v-divider>
               <h4 class="text-center">
                 Don't have an account?

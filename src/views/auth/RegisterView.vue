@@ -1,10 +1,11 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
+import RegisterForm from '@/components/auth/RegisterForm.vue';
 import { useDisplay } from 'vuetify'
-import { ref } from 'vue'
+
 
 const { mobile } = useDisplay()
-const visible = ref(false)
+
 </script>
 
 <template>
@@ -23,56 +24,7 @@ const visible = ref(false)
             </v-card-title>
 
             <v-card-text class="bg-surface-light pt-4">
-              <v-form fast-fail @submit.prevent>
-                <v-text-field
-                  density="compact"
-                  placeholder="Firstname"
-                  variant="outlined"
-                ></v-text-field>
-
-                <v-text-field
-                  density="compact"
-                  placeholder="Lastname"
-                  variant="outlined"
-                ></v-text-field>
-
-                <v-text-field
-                  density="compact"
-                  placeholder="Email address"
-                  prepend-inner-icon="mdi-email-outline"
-                  variant="outlined"
-                ></v-text-field>
-
-                <v-text-field
-                  :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-                  :type="visible ? 'text' : 'password'"
-                  density="compact"
-                  placeholder="Enter your password"
-                  prepend-inner-icon="mdi-lock-outline"
-                  variant="outlined"
-                  @click:append-inner="visible = !visible"
-                ></v-text-field>
-
-                <v-text-field
-                  :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-                  :type="visible ? 'text' : 'password'"
-                  density="compact"
-                  placeholder="Confirm your password"
-                  prepend-inner-icon="mdi-lock-outline"
-                  variant="outlined"
-                  @click:append-inner="visible = !visible"
-                ></v-text-field>
-
-                <v-btn
-                  class="mt-2 color-primary"
-                  type="submit"
-                  prepend-icon="mdi-account-plus"
-                  block
-                  color="deep-orange-darken-2"
-                  variant="outlined"
-                  >Register</v-btn
-                >
-              </v-form>
+             <RegisterForm></RegisterForm>
 
               <v-divider class="my-5"></v-divider>
 
