@@ -47,7 +47,7 @@ const visible = ref(false)
                   type="submit"
                   prepend-icon="mdi-login"
                   block
-                  color="primary"
+                  color="deep-orange-darken-2"
                   variant="outlined"
                   >Login</v-btn
                 >
@@ -55,7 +55,9 @@ const visible = ref(false)
               <v-divider class="my-4"></v-divider>
               <h4 class="text-center">
                 Don't have an account?
-                <RouterLink class="text-primary" to="/register">Click here to Register!</RouterLink>
+                <RouterLink class="text-deep-orange-darken-2" to="/register"
+                  >Click here to Register!</RouterLink
+                >
               </h4>
             </v-card-text>
           </v-card>
