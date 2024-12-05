@@ -6,7 +6,7 @@ const visible = ref(false)
   <template>
   <div>
     <v-img
-      class="mx-auto my-6"
+      class="mx-auto mb-6"
       max-width="220"
       src="/public/images/newloginlogo.png"
     ></v-img>
@@ -20,8 +20,7 @@ const visible = ref(false)
       <div class="text-subtitle-1 text-medium-emphasis">Account</div>
 
       <v-text-field
-        density="compact"
-        placeholder="Email address"
+        placeholder="Email"
         prepend-inner-icon="mdi-email-outline"
         variant="outlined"
       ></v-text-field>
@@ -41,7 +40,6 @@ const visible = ref(false)
       <v-text-field
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
         :type="visible ? 'text' : 'password'"
-        density="compact"
         placeholder="Enter your password"
         prepend-inner-icon="mdi-lock-outline"
         variant="outlined"
