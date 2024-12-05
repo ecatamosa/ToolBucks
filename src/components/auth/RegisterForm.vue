@@ -78,6 +78,7 @@ const rules = {
         :rules="[rules.email]"
         color="orange"
         label="Email"
+        placeholder="johndoe@gmail.com"
         type="email"
         variant="outlined"
       ></v-text-field>
