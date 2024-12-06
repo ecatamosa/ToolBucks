@@ -3,9 +3,12 @@ import { requiredValidator, confirmedValidator, emailValidator, passwordValidato
 import { ref } from 'vue';
 import { supabase, formActionDefault } from '@/utils/supabase';
 import AlertNotification from '../common/AlertNotification.vue';
+import { useRouter } from 'vue-router';
 
 const visible = ref(false);
 const visible2 = ref(false);
+
+const router = useRouter()
 
 const formDataDefault = {
   first_name: '',
@@ -56,6 +59,11 @@ const refVForm = ref()
   } else if (data) {
     console.log(data);
     formAction.value.formSuccessMessage = "Registered Successfully";
+
+    // Can be change to session based redirection(as on video)
+    setTimeout(() => {
+        router.push('/dashboard'); 
+      }, 3000);
   }
 
   formAction.value.formProcess = false;
