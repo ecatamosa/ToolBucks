@@ -108,7 +108,7 @@ const resetForm = () => {
     ></AlertNotification>
 
     <!-- Form Section -->
-    <v-form ref="refVForm" fast-fail @submit.prevent="onFormSubmit"
+    <v-form ref="refVForm" @submit.prevent="onFormSubmit"
       
       class="pa-4 pt-6"
     >
@@ -199,7 +199,7 @@ const resetForm = () => {
         type="submit"
         :disabled="formAction.formProcess"
         :loading="formAction.formProcess"
-        color="orange-accent-4"
+        color="orange"
       >
         Submit
       </v-btn>
