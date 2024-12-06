@@ -8,9 +8,12 @@ import {
 import { ref } from 'vue';
 import { supabase, formActionDefault } from '@/utils/supabase';
 import AlertNotification from '../common/AlertNotification.vue';
+import { useRouter } from 'vue-router';
 
 const visible = ref(false);
 const visible2 = ref(false);
+
+const router = useRouter()
 
 const formDataDefault = {
   first_name: '',
@@ -52,6 +55,11 @@ const onSubmit = async () => {
   } else if (data) {
     console.log(data);
     formAction.value.formSuccessMessage = "Registered Successfully";
+
+    // Can be change to session based redirection(as on video)
+    setTimeout(() => {
+        router.push('/dashboard'); 
+      }, 3000);
   }
 
   formAction.value.formProcess = false;
@@ -90,6 +98,7 @@ const resetForm = () => {
     ></AlertNotification>
 
     <!-- Form Section -->
+<<<<<<< HEAD
     <v-form ref="refVForm" fast-fail @submit.prevent="onFormSubmit" class="pa-4 pt-6">
       <div style="display: flex; gap: 16px;">
         <v-text-field
@@ -107,6 +116,30 @@ const resetForm = () => {
           variant="outlined"
         ></v-text-field>
       </div>
+=======
+    <v-form ref="refVForm" @submit.prevent="onFormSubmit"
+      
+      class="pa-4 pt-6"
+    >
+    
+    <div style="display: flex; gap: 16px;"> <!-- Adjust gap as needed -->
+    <v-text-field
+      :rules="[requiredValidator]"
+      v-model="formData.first_name"
+      color="orange"
+      label="First Name"
+      variant="outlined"
+    ></v-text-field>
+
+    <v-text-field
+      :rules="[requiredValidator]"
+      v-model="formData.last_name"
+      color="orange"
+      label="Last Name"
+      variant="outlined"
+    ></v-text-field>
+  </div>
+>>>>>>> development
       <v-text-field
         :rules="[requiredValidator]"
         v-model="formData.phone_number"
@@ -155,6 +188,7 @@ const resetForm = () => {
           <a href="#" @click.stop.prevent="dialog2 = true">Privacy Policy</a>*
         </template>
       </v-checkbox>
+<<<<<<< HEAD
       <v-card-actions>
         <v-btn variant="text" @click="resetForm">Clear</v-btn>
         <v-spacer></v-spacer>
@@ -167,6 +201,97 @@ const resetForm = () => {
           Submit
         </v-btn>
       </v-card-actions>
+=======
+    
+    <v-card-actions>
+      <v-btn
+        variant="text"
+        @click="resetForm"
+      >
+        Clear
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn
+        type="submit"
+        :disabled="formAction.formProcess"
+        :loading="formAction.formProcess"
+        color="orange"
+      >
+        Submit
+      </v-btn>
+    </v-card-actions>
+
+    
+
+    <!-- Dialog1 -->
+    <v-dialog
+      v-model="dialog"
+      max-width="400"
+      persistent
+    >
+      <v-card>
+        <v-card-title class="text-h5 bg-grey-lighten-3">
+          Terms and Conditions
+        </v-card-title>
+        <v-card-text>
+          pre? wala pani sulod pre char2 lang sa ni. tiwas sa diha code pre hahahaha
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn
+            variant="text"
+            @click="agreement = false, dialog = false"
+          >
+            Confirm
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="orange"
+            variant="tonal"
+            @click="agreement = true, dialog = false"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- End of Dialog1 -->
+
+    <!-- Dialog 2 -->
+    <v-dialog
+      v-model="dialog2"
+      max-width="400"
+      persistent
+    >
+      <v-card>
+        <v-card-title class="text-h5 bg-grey-lighten-3">
+          Privacy Policy
+        </v-card-title>
+        <v-card-text>
+          wala pa lage pre hahahahaha
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn
+            variant="text"
+            @click="agreement2 = false, dialog2 = false"
+          >
+            Confirm
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="orange"
+            variant="tonal"
+            @click="agreement2 = true, dialog2 = false"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- End of Dialog 2 -->
+
+>>>>>>> development
     </v-form>
 
     <!-- Dialogs -->
