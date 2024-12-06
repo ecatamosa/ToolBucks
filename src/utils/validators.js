@@ -46,8 +46,10 @@ export const isEmpty = (value) => {
     const regExp = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/
     const validPassword = regExp.test(password)
   
+
+     //. eslint-disable-next-line operator-linebreak
     return (
-    // eslint-disable-next-line operator-linebreak
+   
       validPassword ||
       'The Password field format is invalid (at least one number, one lowercase letter, one uppercase letter, one special character and at least 8 characters)'
     )
