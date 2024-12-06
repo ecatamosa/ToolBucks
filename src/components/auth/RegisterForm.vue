@@ -1,8 +1,9 @@
 <script setup>
 import { requiredValidator, confirmedValidator, emailValidator, passwordValidator } from '@/utils/validators';
 import { ref } from 'vue';
+import { supabase, formActionDefault } from '@/utils/supabase';
+import AlertNotification from '../common/AlertNotification.vue';
 
-const passwordConfirmation = ref('');
 const visible = ref(false);
 const visible2 = ref(false);
 
@@ -16,39 +17,61 @@ const formDataDefault = {
   agreement: false,
 };
 
-const formData = ref({ ...formDataDefault });
+const formData = ref(
+  { ...formDataDefault }
+)
 
-const revForm = ref()
+const formAction = ref({...formActionDefault});
+
+
+const refVForm = ref()
 
 
   const agreement = ref(false)
   const agreement2 =ref(false)
   const dialog = ref(false)
   const dialog2 = ref(false)
-  const isValid = ref(false)
-  const isLoading = ref(false)
 
 
-const onSubmit = () => {
-  // what should i put here to alert and test the submit
-  alert(`First Name: ${formData.value.first_name}\n` +
-        `Last Name: ${formData.value.last_name}\n` +
-        `Phone Number: ${formData.value.phone_number}\n` +
-        `Email: ${formData.value.email}\n` +
-        `Password: ${formData.value.password}\n` +
-        `Agreed to Terms: ${formData.value.agreement}`);
+  const onSubmit = async () => {
+  formAction.value.formProcess = true;
+  formAction.value.formErrorMessage = ''; // Reset messages
+  formAction.value.formSuccessMessage = '';
+
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.value.email,
+    password: formData.value.password,
+    options: {
+      data: {
+        first_name: formData.value.first_name,
+        last_name: formData.value.last_name,
+        phone: formData.value.phone_number, // Ensure this matches
+      }
+    }
+  });
+
+  if (error) {
+    console.log(error);
+    formAction.value.formErrorMessage = error.message;
+  } else if (data) {
+    console.log(data);
+    formAction.value.formSuccessMessage = "Registered Successfully";
+  }
+
+  formAction.value.formProcess = false;
+  refVForm.value?.reset()
 };
 
 
 const onFormSubmit = () => {
-  revForm.value?.validate().then(({valid}) => {
+  refVForm.value?.validate().then(({valid}) => {
     if (valid) onSubmit() 
   })
 }
 
 const resetForm = () => {
   formData.value = { ...formDataDefault }; // Reset formData to default values
-  isValid.value = false; // Optionally reset the validity state
+  formAction.value = { ...formActionDefault }; // Reset formAction as well
 };
 </script>
 
@@ -57,6 +80,8 @@ const resetForm = () => {
     class="mx-auto mt-16 mb-10"
     style="max-width: 450px;"
   >
+
+    <!-- Form Header -->
     <v-toolbar
       color="orange"
       cards
@@ -74,10 +99,17 @@ const resetForm = () => {
       
     </v-toolbar>
 
+    <br>
+
+    <!-- Alert Notification -->
+    <AlertNotification 
+    :success-message="formAction.formSuccessMessage" 
+    :error-message="formAction.formErrorMessage"
+    ></AlertNotification>
+
     <!-- Form Section -->
-    <v-form ref="revForm" fast-fail @submit.prevent="onFormSubmit"
+    <v-form ref="refVForm" fast-fail @submit.prevent="onFormSubmit"
       
-      v-model="isValid"
       class="pa-4 pt-6"
     >
     
@@ -165,13 +197,15 @@ const resetForm = () => {
       <v-spacer></v-spacer>
       <v-btn
         type="submit"
-        :disabled="!isValid"
-        :loading="isLoading"
+        :disabled="formAction.formProcess"
+        :loading="formAction.formProcess"
         color="orange-accent-4"
       >
         Submit
       </v-btn>
     </v-card-actions>
+
+    
 
     <!-- Dialog1 -->
     <v-dialog

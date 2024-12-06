@@ -1,9 +1,10 @@
 <script setup>
 import { requiredValidator, emailValidator } from '@/utils/validators';
 import { ref } from 'vue'
+import { supabase, formActionDefault } from '@/utils/supabase';
 
 const visible = ref(false)
-const revForm = ref()
+const refVForm = ref()
 
 const formDataDefault = {
   email: '',
@@ -11,22 +12,24 @@ const formDataDefault = {
   remember: false
 }
 
+
+
 const formData = ref({...formDataDefault})
 
-const onSubmit = () => {
+
+
+
+// Test alert onSubmit btn
+const onLogin = () => {
   alert(`Email: ${formData.value.email}\nPassword: ${formData.value.password}\nRemember: ${formData.value.remember}`);
 }
 
 const onFormSubmit = () => {
-  revForm.value?.validate().then(({valid}) => {
-    if (valid) onSubmit() 
+  refVForm.value?.validate().then(({valid}) => {
+    if (valid) onLogin() 
   })
 }
 
-// for testing of submit btn (Define the onSubmit function to display an alert)
-// const onSubmit = () => {
-//   alert(`Email: ${formData.value.email}\nPassword: ${formData.value.password}\nRemember: ${formData.value.remember}`);
-// };
 
 </script>
   <template>
@@ -37,7 +40,7 @@ const onFormSubmit = () => {
       src="/public/images/newloginlogo.png"
     ></v-img>
 
-    <!-- Form Holder Card -->
+    <!-- Form Holder -->
       <v-card
       class="mx-auto pa-12 pb-8"
       elevation="8"
@@ -47,7 +50,7 @@ const onFormSubmit = () => {
       <div class="text-subtitle-1 text-medium-emphasis">Account</div>
 
       <!--Login Form Section -->
-      <v-form ref="revForm" @submit.prevent="onFormSubmit" >
+      <v-form ref="refVForm" @submit.prevent="onFormSubmit" >
       <v-text-field
         v-model="formData.email"
         :rules="[requiredValidator, emailValidator]"
@@ -86,10 +89,11 @@ const onFormSubmit = () => {
 
       <v-btn
         type="submit"
-        class="mb-8"
+        class="mb-8 flex-grow-1"
         color="orange"
         size="large"
         variant="tonal"
+
         block
       >
         Log In
