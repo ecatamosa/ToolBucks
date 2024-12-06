@@ -1,11 +1,9 @@
 <script setup>
-import AppLayout from '@/components/layout/AppLayout.vue'
+import AppLayout from '@/components/layout/AppLayout.vue';
 import RegisterForm from '@/components/auth/RegisterForm.vue';
-import { useDisplay } from 'vuetify'
+import { useDisplay } from 'vuetify';
 
-
-const { mobile } = useDisplay()
-
+const { mobile } = useDisplay();
 </script>
 
 <template>
@@ -13,7 +11,7 @@ const { mobile } = useDisplay()
     <template #content>
       <v-row>
         <v-col cols="12" md="6" class="mx-auto">
-          <v-card class="mx-auto text-center" elevation="20">
+          <v-card class="mx-auto text-center" elevation="20" max-width="600">
             <v-card-title class="text-center">
               <v-img
                 class="mx-auto"
@@ -24,7 +22,7 @@ const { mobile } = useDisplay()
             </v-card-title>
 
             <v-card-text class="bg-surface-light pt-4">
-             <RegisterForm></RegisterForm>
+              <RegisterForm></RegisterForm>
 
               <v-divider class="my-5"></v-divider>
 
@@ -37,7 +35,7 @@ const { mobile } = useDisplay()
             </v-card-text>
           </v-card>
         </v-col>
-      </v-row></template
-    >
+      </v-row>
+    </template>
   </AppLayout>
 </template>
