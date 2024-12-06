@@ -72,7 +72,7 @@ const onFormSubmit = () => {
     <v-img
       class="mx-auto mb-6"
       max-width="220"
-      src="/public/images/newloginlogo.png"
+      src="/images/newloginlogo.png"
     ></v-img>
 
     <!-- Form Holder -->
