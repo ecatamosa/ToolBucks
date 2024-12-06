@@ -47,7 +47,7 @@ export const isEmpty = (value) => {
     const validPassword = regExp.test(password)
   
     return (
-      // eslint-disable-next-line operator-linebreak
+    // eslint-disable-next-line operator-linebreak
       validPassword ||
       'The Password field format is invalid (at least one number, one lowercase letter, one uppercase letter, one special character and at least 8 characters)'
     )
@@ -94,42 +94,4 @@ export const isEmpty = (value) => {
     if (isEmpty(value)) return true
   
     return /^[A-Z]*$/i.test(String(value)) || 'The Alpha field may only contain alphabetic characters'
-  }
-  
-  // 👉 URL Validator
-  export const urlValidator = (value) => {
-    if (isEmpty(value)) return true
-  
-    const re = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}[.]{0,1}/
-  
-    return re.test(String(value)) || 'URL is invalid'
-  }
-  
-  // 👉 Length Validator
-  export const lengthValidator = (value, length) => {
-    if (isEmpty(value)) return true
-  
-    return (
-      String(value).length >= length ||
-      `The Min Character field must be at least ${length} characters`
-    )
-  }
-  
-  // 👉 Alpha-dash Validator
-  export const alphaDashValidator = (value) => {
-    if (isEmpty(value)) return true
-  
-    const valueAsString = String(value)
-  
-    return (
-      /^[0-9A-Z_-]*$/i.test(valueAsString) ||
-      'The input must be alphanumeric and can only include dashes (-) and underscores (_).'
-    )
-  }
-  
-  // 👉 Image Validator
-  export const imageValidator = (value) => {
-    if (isEmpty(value)) return true
-  
-    return !value || !value.length || value[0].size < 2000000 || 'Image size should be less than 2 MB'
   }
