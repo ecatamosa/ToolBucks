@@ -1,4 +1,5 @@
 <script setup>
+import AppLayout from '@/components/layout/AppLayout.vue';
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useTheme } from 'vuetify';
@@ -36,6 +37,7 @@ const user = {
   'images/slide4.png',
   'images/slide5.png',
 ];
+
 const activeSlide = ref(0);
 
 </script>
@@ -95,7 +97,7 @@ const activeSlide = ref(0);
     </v-btn>
   
       </v-btn>
-      <v-btn text color="white">Tools</v-btn>
+      <v-btn text color="white">All Tools</v-btn>
       <v-btn text color="white">Rentals</v-btn>
       <v-btn text color="white">About</v-btn>
       <v-btn text color="white">Contact</v-btn>
@@ -215,14 +217,27 @@ const activeSlide = ref(0);
         <v-img :src="slide" alt="Slide Image" cover></v-img>
       </v-carousel-item>
   </v-carousel>
-
-
-    </v-main>
-
-
+</v-main>
 
   </v-layout>
+
+  <v-layout>
+    <v-main >
+      <v-container fluid>
+        <v-row>
+          <v-col cols="12">
+            <h1>Popular Products</h1>
+          </v-col> 
+        </v-row>
+        
+        
+      </v-container>
+    </v-main>
+    </v-layout>
 </template>
+
+  
+
 
 <style scoped>
 /* Hover area for triggering drawer */

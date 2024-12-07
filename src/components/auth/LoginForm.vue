@@ -67,10 +67,12 @@ const onFormSubmit = () => {
 
 
 </script>
+
+
   <template>
   <div>
     <v-img
-      class="mx-auto mb-6"
+      class="mx-auto"
       max-width="220"
       src="/images/newloginlogo.png"
     ></v-img>

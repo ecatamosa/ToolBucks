@@ -28,15 +28,19 @@ const vuetify = createVuetify({
       dark: {
         primary: '#BB86FC',
         secondary: '#03DAC6',
+        error: '#D32F2F',
         // Define other dark theme colors as needed
       },
       light: {
         primary: '#1976D2',
+        error: '#D32F2F',
         // Define other light theme colors as needed
       },
     },
   },
 })
+
+
 
 app.use(createPinia())
 app.use(router)

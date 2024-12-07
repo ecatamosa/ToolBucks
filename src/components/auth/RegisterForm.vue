@@ -84,8 +84,10 @@ const resetForm = () => {
 </script>
 
 <template>
-  <v-card
-    class="mx-auto mt-16 mb-10"
+  <v-container fill-height>
+      <v-row justify="center" align="center">
+        <v-card
+    class="mx-auto"
     style="max-width: 450px;"
   >
 
@@ -177,23 +179,22 @@ const resetForm = () => {
     variant="outlined"
   ></v-text-field>
       <v-checkbox
-        v-model="formData.agreement"
-        :rules="[requiredValidator]"
-        color="orange"
-      >
-        <template v-slot:label>
-          I agree to the&nbsp;
-          <a
-            href="#"
-            @click.stop.prevent="dialog = true"
-          >Terms of Service</a>
-          &nbsp;and&nbsp;
-          <a
-            href="#"
-            @click.stop.prevent="dialog2 = true"
-          >Privacy Policy</a>*
-        </template>
-      </v-checkbox>
+  v-model="formData.agreement"
+  :rules="[requiredValidator]"
+  color="orange"
+  class="d-flex align-center"
+>
+  <template v-slot:label>
+    <div style="display: flex; flex-direction: column; text-align: left;">
+      <span>
+        I agree to the&nbsp;
+        <a href="#" @click.stop.prevent="dialog = true">Terms of Service</a>
+        &nbsp;and&nbsp;
+        <a href="#" @click.stop.prevent="dialog2 = true">Privacy Policy</a>*
+      </span>
+    </div>
+  </template>
+</v-checkbox>
     
     <v-card-actions>
       <v-btn
@@ -286,4 +287,6 @@ const resetForm = () => {
     </v-form>
     <!-- End of Form Section -->
   </v-card>
+      </v-row>
+  </v-container>
 </template>
