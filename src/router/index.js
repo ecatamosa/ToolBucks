@@ -8,7 +8,7 @@ const router = createRouter({
   routes: [
     {
       path: '/', // Default route
-      redirect: '/login', // Redirect to the login page
+      redirect: '/', // Redirect to the login page
     },
     
     {
