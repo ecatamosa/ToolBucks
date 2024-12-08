@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { supabase, formActionDefault } from '@/utils/supabase';
 import AlertNotification from '../common/AlertNotification.vue';
 import { useRouter } from 'vue-router';
+import LandingPage from '@/views/system/LandingPage.vue';
 
 const visible = ref(false);
 const visible2 = ref(false);
@@ -64,8 +65,8 @@ const refVForm = ref()
 
     // Can be change to session based redirection(as on video)
     setTimeout(() => {
-        router.replace('/dashboard'); 
-      }, 3000);
+       router.replace('/dashboard') //change route if dashboardview is created
+      }, 2000);
   }
 
   formAction.value.formProcess = false;

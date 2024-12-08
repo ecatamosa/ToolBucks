@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/auth/LoginView.vue'
 import RegisterView from '@/views/auth/RegisterView.vue'
+import LandingPage from '@/views/system/LandingPage.vue'
 import DashboardView from '@/views/system/DashboardView.vue'
 
 const router = createRouter({
@@ -8,7 +9,9 @@ const router = createRouter({
   routes: [
     {
       path: '/', // Default route
-      redirect: '/login', // Redirect to the login page
+      name: 'landingpage',
+      component: LandingPage
+       // Redirect to the login page
     },
     
     {

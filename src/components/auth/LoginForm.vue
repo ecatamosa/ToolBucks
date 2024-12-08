@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { supabase, formActionDefault } from '@/utils/supabase';
 import AlertNotification from '../common/AlertNotification.vue';
+import LandingPage from '@/views/system/LandingPage.vue';
 
 const router = useRouter()
 
@@ -46,8 +47,8 @@ const onLogin = async () => {
 
       // Delay the redirect for 5 seconds
       setTimeout(() => {
-        router.replace('/dashboard'); 
-      }, 3000); // 5000 milliseconds = 5 seconds
+        router.replace('/dashboard'); //change route if dashboardview is created
+      }, 2000); // 5000 milliseconds = 5 seconds
 
       
     }
