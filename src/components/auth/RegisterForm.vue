@@ -49,6 +49,8 @@ const refVForm = ref()
         first_name: formData.value.first_name,
         last_name: formData.value.last_name,
         phone: formData.value.phone_number, // Ensure this matches
+        agreement: true,
+        isAdmin : false,
       }
     }
   });
@@ -62,7 +64,7 @@ const refVForm = ref()
 
     // Can be change to session based redirection(as on video)
     setTimeout(() => {
-        router.push('/dashboard'); 
+        router.replace('/dashboard'); 
       }, 3000);
   }
 
@@ -182,7 +184,7 @@ const resetForm = () => {
   v-model="formData.agreement"
   :rules="[requiredValidator]"
   color="orange"
-  class="d-flex align-center"
+  
 >
   <template v-slot:label>
     <div style="display: flex; flex-direction: column; text-align: left;">

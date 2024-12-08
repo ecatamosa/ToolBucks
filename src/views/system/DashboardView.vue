@@ -1,35 +1,8 @@
 <script setup>
-import AppLayout from '@/components/layout/AppLayout.vue';
-import { ref } from 'vue';
+import SideNavigation from '@/components/navigation/SideNavigation.vue';
 import { RouterLink } from 'vue-router';
-import { useTheme } from 'vuetify';
-
-const isDrawerOpen = ref(false);
-
-// Functions to handle mouse events
-const handleMouseEnter = () => {
-  isDrawerOpen.value = true;
-};
-
-const handleMouseLeave = () => {
-  isDrawerOpen.value = false;
-};
 
 
-// dummy User 
-const user = {
-    initials: 'JD',
-    fullName: 'John Doe',
-    email: 'john.doe@doe.com',
-  }
-  
-  const colors = [
-    'indigo',
-    'warning',
-    'pink darken-2',
-    'red lighten-1',
-    'deep-purple accent-4',
-  ]
   const slides = [
   'images/slide1.png',
   'images/slide2.png',
@@ -38,7 +11,6 @@ const user = {
   'images/slide5.png',
 ];
 
-const activeSlide = ref(0);
 
 </script>
 
@@ -113,94 +85,7 @@ const activeSlide = ref(0);
       <RouterLink class="text-decoration-none text-orange" to="/login"><v-btn  text color="amber-darken-3" class="mr-4" prepend-icon="mdi-account" variant="plain">Login</v-btn></RouterLink>
   </v-app-bar>
 
-    <!-- Hover area on the left -->
-    <div 
-      class="hover-area" 
-      @mouseenter="handleMouseEnter"
-    ></div>
-
-    <!-- Navigation Drawer -->
-    <v-navigation-drawer
-      class="surface-variant"
-      theme="dark"
-      temporary
-      v-model="isDrawerOpen"
-      @mouseleave="handleMouseLeave"
-      width="250"
-    >
-      <v-list density="compact" nav>
-        <v-menu
-        min-width="200px"
-        rounded
-      >
-        <!-- <template v-slot:activator="{ props }">
-          <v-btn
-            icon
-            v-bind="props"
-          >
-            <v-avatar
-              color="brown"
-              size="large"
-            >
-              <span class="text-h5">{{ user.initials }}</span>
-            </v-avatar>
-          </v-btn>
-          <v-list-item-title>John Doe</v-list-item-title>
-        </template> -->
-
-        <!-- Avatar Button -->
-        <template v-slot:activator="{ props }">
-        <v-row class="align-center my-2 ms-1">
-         <v-btn icon v-bind="props">
-           <v-avatar
-           color="brown"
-           size="large"
-            >
-          <span class="text-h5">{{ user.initials }}</span>
-          </v-avatar>
-        </v-btn>
-
-    <!-- Name to the right of the avatar -->
-    <v-list-item-title class="ml-2 text-white">
-      {{ user.fullName }}
-    </v-list-item-title>
-  </v-row>
-</template>
-        <v-card>
-          <v-card-text>
-            <div class="mx-auto text-center">
-              <v-avatar
-                color="brown"
-              >
-                <span class="text-h5">{{ user.initials }}</span>
-              </v-avatar>
-              <p class="text-caption mt-1">
-                {{ user.email }}
-              </p>
-              <v-divider class="my-3"></v-divider>
-              <v-btn
-                variant="text"
-                rounded
-              >
-                Edit Account
-              </v-btn>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-menu>
-        
-      <v-divider class="mt-3"></v-divider>
-
-        <v-list-item class="mt-2" prepend-icon="mdi-account" title="My Account" value="account"></v-list-item>
-        <v-list-item prepend-icon="mdi-hand-coin" title="My Rentals" value="users"></v-list-item>
-      </v-list>
-
-      <template v-slot:append>
-        <div class="pa-2">
-          <v-btn color="orange-darken-3" block>Logout</v-btn>
-        </div>
-      </template>
-    </v-navigation-drawer>
+  <SideNavigation></SideNavigation>
 
 
 
@@ -226,11 +111,9 @@ const activeSlide = ref(0);
       <v-container fluid>
         <v-row>
           <v-col cols="12">
-            <h1>Popular Products</h1>
+            <h1>Popular Tools</h1>
           </v-col> 
         </v-row>
-        
-        
       </v-container>
     </v-main>
     </v-layout>
@@ -239,19 +122,4 @@ const activeSlide = ref(0);
   
 
 
-<style scoped>
-/* Hover area for triggering drawer */
-.hover-area {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 10px; 
-   height: 100vh; 
-  background-color: transparent; 
-  z-index: 1000; 
-}  
 
-.v-navigation-drawer {
-  transition: transform 0.3s ease-in-out;
-}
-</style>

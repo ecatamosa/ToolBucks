@@ -46,7 +46,7 @@ const onLogin = async () => {
 
       // Delay the redirect for 5 seconds
       setTimeout(() => {
-        router.push('/dashboard'); 
+        router.replace('/dashboard'); 
       }, 3000); // 5000 milliseconds = 5 seconds
 
       
