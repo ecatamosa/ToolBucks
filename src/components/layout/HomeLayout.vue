@@ -12,6 +12,14 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  showSearchBar: {
+    type: Boolean,
+    default: true,
+  },
+  showCart: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 
@@ -93,6 +101,8 @@ const slides = [
     <v-spacer></v-spacer>
     
       <RouterLink v-if="showLoginButton" class="text-decoration-none text-orange" to="/login"><v-btn  text color="amber-darken-3" class="mr-4" prepend-icon="mdi-account" variant="plain">Login</v-btn></RouterLink>
+      <RouterLink v-if="showSearchBar" class="text-decoration-none text-orange" to="/search"><v-btn icon="mdi-magnify"  text color="amber-darken-3" class="mr-4"  variant="plain"></v-btn></RouterLink>
+      <RouterLink v-if="showSearchBar" class="text-decoration-none text-orange" to="/cart"><v-btn icon="mdi-cart"  text color="amber-darken-3" class="mr-4"   variant="plain"></v-btn></RouterLink>
   </v-app-bar>
 
   <SideNavigation v-if="showSideNavigation" ></SideNavigation>

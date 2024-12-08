@@ -9,7 +9,10 @@ import HomeLayout from '@/components/layout/HomeLayout.vue';
 
 <!-- content must be from homelayout without sidenav(profile) but has login-->
 <template>
-  <HomeLayout :show-side-navigation="false" ></HomeLayout>
+  <HomeLayout 
+  :show-side-navigation="false"
+  :show-search-bar="false" 
+  ></HomeLayout>
 </template>
 
   
