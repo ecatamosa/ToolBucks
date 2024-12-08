@@ -1,8 +1,5 @@
 <script setup>
 import HomeLayout from '@/components/layout/HomeLayout.vue';
-import SideNavigation from '@/components/navigation/SideNavigation.vue';
-
-
 </script>
 
 

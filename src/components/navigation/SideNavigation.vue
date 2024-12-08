@@ -92,7 +92,9 @@ const user = {
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn color="orange-darken-3" block>Logout</v-btn>
+          <RouterLink class="text-decoration-none" to="/login">
+            <v-btn color="orange-darken-3" block>Logout</v-btn>
+          </RouterLink>
         </div>
       </template>
     </v-navigation-drawer>
