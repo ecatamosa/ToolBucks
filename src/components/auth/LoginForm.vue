@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { supabase, formActionDefault } from '@/utils/supabase';
 import AlertNotification from '../common/AlertNotification.vue';
-import LandingPage from '@/views/system/LandingPage.vue';
+import { onMounted } from 'vue';
 
 const router = useRouter()
 
@@ -44,6 +44,14 @@ const onLogin = async () => {
       console.log('Login successful:', data);
       formAction.value.formSuccessMessage = "Access granted! Redirecting now...";
 
+      // Save email and password if "Remember Password" is checked
+      if (formData.value.remember) {
+        localStorage.setItem('rememberedEmail', formData.value.email);
+        localStorage.setItem('rememberedPassword', formData.value.password);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+        localStorage.removeItem('rememberedPassword');
+      }
 
       // Delay the redirect for 5 seconds
       setTimeout(() => {
@@ -66,17 +74,31 @@ const onFormSubmit = () => {
   })
 }
 
+// Load saved email and password on mount
+onMounted(() => {
+  const savedEmail = localStorage.getItem('rememberedEmail');
+  const savedPassword = localStorage.getItem('rememberedPassword');
 
+  if (savedEmail) {
+    formData.value.email = savedEmail;
+  }
+  if (savedPassword) {
+    formData.value.password = savedPassword; // Be cautious with this
+    formData.value.remember = true; // Check the remember checkbox by default
+  }
+});
 </script>
 
 
   <template>
   <div>
-    <v-img
-      class="mx-auto"
+    <RouterLink to="/">
+      <v-img
+      class="mx-auto my-6"
       max-width="220"
-      src="/images/newloginlogo.png"
+      src="public/images/newloginlogo2.png"
     ></v-img>
+    </RouterLink>
 
     <!-- Form Holder -->
       <v-card

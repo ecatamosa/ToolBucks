@@ -58,7 +58,7 @@ const refVForm = ref()
 
   if (error) {
     console.log(error);
-    formAction.value.formErrorMessage = error.message
+    formAction.value.formErrorMessage = "Registration failed. Try again later.";
     formAction.value.formStatus = error.status
 
   } else if (data) {
@@ -92,24 +92,23 @@ const resetForm = () => {
   <v-container fill-height>
       <v-row justify="center" align="center">
         <v-card
+        elevation="8"
     class="mx-auto"
     style="max-width: 450px;"
   >
 
     <!-- Form Header -->
     <v-toolbar
-      color="orange"
-      cards
       dark
       flat
     >
+    <RouterLink to="/login" class="icon-link ml-2">
       <v-btn icon>
-        <RouterLink to="/">
-          <v-icon color="black">mdi-arrow-left</v-icon>
-        </RouterLink>
-      </v-btn>
-      <v-card-title class="text-h6 font-weight-regular">
-        Sign up
+          <v-icon class="hover-icon">mdi-arrow-left</v-icon>
+        </v-btn>
+      </RouterLink>
+      <v-card-title class="text-h6 font-weight-regular ">
+        Create Your Account
       </v-card-title>
       
     </v-toolbar>
@@ -203,8 +202,9 @@ const resetForm = () => {
     
     <v-card-actions>
       <v-btn
-        variant="text"
+        variant="plain"
         @click="resetForm"
+        color="grey"
       >
         Clear
       </v-btn>
@@ -295,3 +295,18 @@ const resetForm = () => {
       </v-row>
   </v-container>
 </template>
+
+<style scoped>
+.icon-link {
+  display: inline-block; /* Makes the link behave like a block for hover effect */
+}
+
+.hover-icon {
+  color: black; /* Default color */
+  transition: color 0.3s; /* Smooth transition for color change */
+}
+
+.icon-link:hover .hover-icon {
+  color: orange; /* Change color to orange on hover */
+}
+</style>
