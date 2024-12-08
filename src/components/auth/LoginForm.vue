@@ -121,7 +121,7 @@ const onForgotPassword = async () => {
       <v-img
       class="mx-auto my-6"
       max-width="220"
-      src="public/images/newloginlogo2.png"
+      src="images/newloginlogo2.png"
     ></v-img>
     </RouterLink>
 
