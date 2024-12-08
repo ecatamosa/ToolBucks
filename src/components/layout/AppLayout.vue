@@ -10,7 +10,7 @@ const isLoggedIn = ref(false)
 
 // Get Authentication status from supabase
 const getLoggedStatus = async () => {
-  isLoggedIn.value = await authStore.isAuthenticated()
+  isLoggedIn.value = await isAuthenticated()
 
  
 }

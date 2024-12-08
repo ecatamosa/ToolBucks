@@ -54,14 +54,16 @@ const refVForm = ref()
         isAdmin : false,
       }
     }
-  });
+  })
 
   if (error) {
     console.log(error);
-    formAction.value.formErrorMessage = error.message;
+    formAction.value.formErrorMessage = error.message
+    formAction.value.formStatus = error.status
+
   } else if (data) {
     console.log(data);
-    formAction.value.formSuccessMessage = "Registered Successfully";
+    formAction.value.formSuccessMessage = "Registered Successfully! Redirecting...";
 
     // Can be change to session based redirection(as on video)
     setTimeout(() => {

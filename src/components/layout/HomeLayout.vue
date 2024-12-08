@@ -1,8 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import { defineProps } from 'vue';
-import SideNavigation from '../navigation/SideNavigation.vue';
-
+import SideNavigation from './navigation/SideNavigation.vue';
 const props = defineProps({
   showLoginButton: {
     type: Boolean,
@@ -26,7 +25,9 @@ const slides = [
 'images/slide3.png',
 'images/slide4.png',
 'images/slide5.png',
-];
+]
+
+
 </script>
 
 <template>
@@ -47,12 +48,12 @@ const slides = [
     
     <!-- Center: Categories -->
     <v-row class="justify-center" align="center" dense>
-      <v-btn text color="white">
-        Category   
+        
     <v-btn variant="plain">
-      <v-icon icon="mdi-chevron-down"></v-icon>
+      Category
+      <v-icon class="ml-2" icon="mdi-chevron-down"></v-icon>
 
-      <v-menu activator="parent">
+      <v-menu open-on-hover activator="parent">
         <v-list>
           <v-list-item v-for="i in 5" :key="i" link>
             <v-list-item-title>Item {{ i }}</v-list-item-title>
@@ -83,11 +84,11 @@ const slides = [
       </v-menu>
     </v-btn>
   
-      </v-btn>
-      <v-btn text color="white">All Tools</v-btn>
-      <v-btn text color="white">Rentals</v-btn>
-      <v-btn text color="white">About</v-btn>
-      <v-btn text color="white">Contact</v-btn>
+      
+      <v-btn text variant="plain">All Tools</v-btn>
+      <v-btn text variant="plain">Rentals</v-btn>
+      <v-btn text variant="plain">About</v-btn>
+      <v-btn text variant="plain">Contact</v-btn>
     </v-row>
 
     <!-- Spacer to push the login button to the right -->
