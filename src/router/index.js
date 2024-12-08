@@ -4,6 +4,7 @@ import RegisterView from '@/views/auth/RegisterView.vue'
 import LandingPage from '@/views/system/LandingPage.vue'
 import DashboardView from '@/views/system/DashboardView.vue'
 import { isAuthenticated } from '@/utils/supabase'
+import NotFoundView from '@/views/system/error/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,10 +34,34 @@ const router = createRouter({
       component: DashboardView,
       meta: { requiresAuth: true}
     },
+    {
+      path: '/:pathMatch(.*)*', // Catch-all route for 404
+      name: 'not-found',
+      component: NotFoundView
+    }
     
   ],
 })
 
+// Navigation Guard
+router.beforeEach(async (to) => {
+  const isLoggedIn = await isAuthenticated(); // Check login status once
+
+  // If user is logged in, prevent access to login and register pages
+  if (isLoggedIn && (to.name === 'login' || to.name === 'register')) {
+    return { name: 'dashboard' }; // Redirect to the dashboard
+  }
+
+   // Allow logged-in users to access the home page
+   if (to.name === 'landingpage' && isLoggedIn) {
+    return { name: 'dashboard' }; // Redirect to the dashboard if logged in
+  }
+  
+  // Check if the route requires authentication
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    return { name: 'login' }; // If not logged in, redirect to the login page
+  }
+});
 
 
 export default router
