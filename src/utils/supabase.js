@@ -10,6 +10,7 @@ export const formActionDefault = {
     formStatus: 200,
     formErrorMessage: '',
     formSuccessMessage: '',
+    forgotPasswordLoading: false // Dedicated loading for forgot password
 }
 
 export const isAuthenticated = async () => {

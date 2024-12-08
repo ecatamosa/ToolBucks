@@ -87,6 +87,31 @@ onMounted(() => {
     formData.value.remember = true; // Check the remember checkbox by default
   }
 });
+
+
+const onForgotPassword = async () => {
+  formAction.value.forgotPasswordLoading  = true; // Set loading state
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(formData.value.email);
+    if (error) {
+      console.error('Error sending reset password email:', error.message);
+      formAction.value.formErrorMessage = "Failed to send password reset email. Please check your email.";
+      setTimeout(() => {
+        formAction.value.formErrorMessage = ""; // Clear the message after 2 seconds
+      }, 2000);
+    } else {
+      formAction.value.formSuccessMessage = "Password reset email sent! Please check your inbox.";
+      setTimeout(() => {
+        formAction.value.formSuccessMessage = ""; // Clear the message after 5 seconds
+      }, 5000);
+    }
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    alert('An unexpected error occurred. Please try again.');
+  } finally {
+    formAction.value.forgotPasswordLoading  = false; // Reset loading state
+  }
+};
 </script>
 
 
@@ -129,13 +154,23 @@ onMounted(() => {
       <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
         Password
 
-        <a
-          class="text-caption text-decoration-none text-orange"
-          href="#"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Forgot login password?</a>
+        <div class="text-caption text-decoration-none text-orange">
+      <a
+        href="#"
+        type="button"
+        class="text-decoration-none"
+        rel="noopener noreferrer"
+        @click.prevent="onForgotPassword"
+        :disabled="formAction.forgotPasswordLoading " 
+        :style="{
+          pointerEvents: formAction.forgotPasswordLoading  ? 'none' : 'auto',
+          color: formAction.forgotPasswordLoading  ? '#aaa' : '#ff9800'
+        }"
+      >
+        Forgot password?
+        <span v-if="formAction.forgotPasswordLoading " class="loader"></span> <!-- Loading animation -->
+      </a>
+    </div>
       </div>
 
       <v-text-field
@@ -179,3 +214,21 @@ onMounted(() => {
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.loader {
+    border: 2px solid #ff9800; /* Orange border */
+    border-top: 2px solid transparent; /* Transparent on top */
+    border-radius: 50%;
+    width: 12px; /* Adjust size as needed */
+    height: 12px; /* Adjust size as needed */
+    animation: spin 0.6s linear infinite; /* Spin animation */
+    display: inline-block; /* Inline for proper alignment */
+    margin-left: 5px; /* Space between text and spinner */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>

@@ -2,6 +2,10 @@
 import { RouterLink } from 'vue-router';
 import { defineProps } from 'vue';
 import SideNavigation from './navigation/SideNavigation.vue';
+
+import { shallowRef } from 'vue'
+
+const selection = shallowRef(2) //each product
 const props = defineProps({
   showLoginButton: {
     type: Boolean,
@@ -127,10 +131,368 @@ const slides = [
   <v-layout>
     <v-main >
       <v-container fluid>
-        <v-row>
-          <v-col cols="12">
-            <h1>Popular Tools</h1>
+        <v-row class="mt-5">
+          <h1 class="ml-5">Popular Tools</h1>
+          <v-col cols="12" class="d-flex mt-10">
+
+            <v-card
+    class="mx-auto"
+    max-width="305"
+  >
+    <v-card-title>
+      <h2 class="text-h4">Tool</h2>
+
+      <v-spacer></v-spacer>
+
+      <span class="text-h6">$4.99</span>
+    </v-card-title>
+
+    <v-card-text>
+      Our company takes pride in making handmade brushes.
+      Our Tools are available in 4 different bristel types, from extra soft to hard.
+    </v-card-text>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <span class="subheading">Select type</span>
+
+      <v-chip-group
+        v-model="selection"
+        variant="flat"
+        mandatory
+      >
+        <v-chip text="Extra Soft" border></v-chip>
+        <v-chip text="Soft" border></v-chip>
+        <v-chip text="Medium" border></v-chip>
+        <v-chip text="Hard" border></v-chip>
+      </v-chip-group>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        color="orange-darken-3"
+        text="Add to Cart"
+        variant="flat"
+        block
+      ></v-btn>
+    </v-card-actions>
+            </v-card>
+
+            <v-card
+    class="mx-auto"
+    max-width="305"
+  >
+    <v-card-title>
+      <h2 class="text-h4">Tool</h2>
+
+      <v-spacer></v-spacer>
+
+      <span class="text-h6">$4.99</span>
+    </v-card-title>
+
+    <v-card-text>
+      Our company takes pride in making handmade brushes.
+      Our Tools are available in 4 different bristel types, from extra soft to hard.
+    </v-card-text>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <span class="subheading">Select type</span>
+
+      <v-chip-group
+        v-model="selection"
+        variant="flat"
+        mandatory
+      >
+        <v-chip text="Extra Soft" border></v-chip>
+        <v-chip text="Soft" border></v-chip>
+        <v-chip text="Medium" border></v-chip>
+        <v-chip text="Hard" border></v-chip>
+      </v-chip-group>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        color="orange-darken-3"
+        text="Add to Cart"
+        variant="flat"
+        block
+      ></v-btn>
+    </v-card-actions>
+            </v-card>
+            
+            <v-card
+    class="mx-auto"
+    max-width="305"
+  >
+    <v-card-title>
+      <h2 class="text-h4">Tool</h2>
+
+      <v-spacer></v-spacer>
+
+      <span class="text-h6">$4.99</span>
+    </v-card-title>
+
+    <v-card-text>
+      Our company takes pride in making handmade brushes.
+      Our Tools are available in 4 different bristel types, from extra soft to hard.
+    </v-card-text>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <span class="subheading">Select type</span>
+
+      <v-chip-group
+        v-model="selection"
+        variant="flat"
+        mandatory
+      >
+        <v-chip text="Extra Soft" border></v-chip>
+        <v-chip text="Soft" border></v-chip>
+        <v-chip text="Medium" border></v-chip>
+        <v-chip text="Hard" border></v-chip>
+      </v-chip-group>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        color="orange-darken-3"
+        text="Add to Cart"
+        variant="flat"
+        block
+      ></v-btn>
+    </v-card-actions>
+            </v-card>
+            
+            <v-card
+    class="mx-auto"
+    max-width="305"
+  >
+    <v-card-title>
+      <h2 class="text-h4">Tool</h2>
+
+      <v-spacer></v-spacer>
+
+      <span class="text-h6">$4.99</span>
+    </v-card-title>
+
+    <v-card-text>
+      Our company takes pride in making handmade brushes.
+      Our Tools are available in 4 different bristel types, from extra soft to hard.
+    </v-card-text>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <span class="subheading">Select type</span>
+
+      <v-chip-group
+        v-model="selection"
+        variant="flat"
+        mandatory
+      >
+        <v-chip text="Extra Soft" border></v-chip>
+        <v-chip text="Soft" border></v-chip>
+        <v-chip text="Medium" border></v-chip>
+        <v-chip text="Hard" border></v-chip>
+      </v-chip-group>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        color="orange-darken-3"
+        text="Add to Cart"
+        variant="flat"
+        block
+      ></v-btn>
+    </v-card-actions>
+            </v-card>
+
           </v-col> 
+
+          <!-- 2nd row -->
+          <v-col cols="12" class="d-flex">
+            <v-card
+    class="mx-auto"
+    max-width="305"
+  >
+    <v-card-title>
+      <h2 class="text-h4">Tool</h2>
+
+      <v-spacer></v-spacer>
+
+      <span class="text-h6">$4.99</span>
+    </v-card-title>
+
+    <v-card-text>
+      Our company takes pride in making handmade brushes.
+      Our Tools are available in 4 different bristel types, from extra soft to hard.
+    </v-card-text>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <span class="subheading">Select type</span>
+
+      <v-chip-group
+        v-model="selection"
+        variant="flat"
+        mandatory
+      >
+        <v-chip text="Extra Soft" border></v-chip>
+        <v-chip text="Soft" border></v-chip>
+        <v-chip text="Medium" border></v-chip>
+        <v-chip text="Hard" border></v-chip>
+      </v-chip-group>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        color="orange-darken-3"
+        text="Add to Cart"
+        variant="flat"
+        block
+      ></v-btn>
+    </v-card-actions>
+            </v-card>
+
+            <v-card
+    class="mx-auto"
+    max-width="305"
+  >
+    <v-card-title>
+      <h2 class="text-h4">Tool</h2>
+
+      <v-spacer></v-spacer>
+
+      <span class="text-h6">$4.99</span>
+    </v-card-title>
+
+    <v-card-text>
+      Our company takes pride in making handmade brushes.
+      Our Tools are available in 4 different bristel types, from extra soft to hard.
+    </v-card-text>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <span class="subheading">Select type</span>
+
+      <v-chip-group
+        v-model="selection"
+        variant="flat"
+        mandatory
+      >
+        <v-chip text="Extra Soft" border></v-chip>
+        <v-chip text="Soft" border></v-chip>
+        <v-chip text="Medium" border></v-chip>
+        <v-chip text="Hard" border></v-chip>
+      </v-chip-group>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        color="orange-darken-3"
+        text="Add to Cart"
+        variant="flat"
+        block
+      ></v-btn>
+    </v-card-actions>
+            </v-card>
+
+            <v-card
+    class="mx-auto"
+    max-width="305"
+  >
+    <v-card-title>
+      <h2 class="text-h4">Tool</h2>
+
+      <v-spacer></v-spacer>
+
+      <span class="text-h6">$4.99</span>
+    </v-card-title>
+
+    <v-card-text>
+      Our company takes pride in making handmade brushes.
+      Our Tools are available in 4 different bristel types, from extra soft to hard.
+    </v-card-text>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <span class="subheading">Select type</span>
+
+      <v-chip-group
+        v-model="selection"
+        variant="flat"
+        mandatory
+      >
+        <v-chip text="Extra Soft" border></v-chip>
+        <v-chip text="Soft" border></v-chip>
+        <v-chip text="Medium" border></v-chip>
+        <v-chip text="Hard" border></v-chip>
+      </v-chip-group>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        color="orange-darken-3"
+        text="Add to Cart"
+        variant="flat"
+        block
+      ></v-btn>
+    </v-card-actions>
+            </v-card>
+
+            <v-card
+    class="mx-auto"
+    max-width="305"
+  >
+    <v-card-title>
+      <h2 class="text-h4">Tool</h2>
+
+      <v-spacer></v-spacer>
+
+      <span class="text-h6">$4.99</span>
+    </v-card-title>
+
+    <v-card-text>
+      Our company takes pride in making handmade brushes.
+      Our Tools are available in 4 different bristel types, from extra soft to hard.
+    </v-card-text>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <span class="subheading">Select type</span>
+
+      <v-chip-group
+        v-model="selection"
+        variant="flat"
+        mandatory
+      >
+        <v-chip text="Extra Soft" border></v-chip>
+        <v-chip text="Soft" border></v-chip>
+        <v-chip text="Medium" border></v-chip>
+        <v-chip text="Hard" border></v-chip>
+      </v-chip-group>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        color="orange-darken-3"
+        text="Add to Cart"
+        variant="flat"
+        block
+      ></v-btn>
+    </v-card-actions>
+            </v-card>
+
+
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
