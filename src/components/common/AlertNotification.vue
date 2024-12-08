@@ -18,7 +18,6 @@ const props = defineProps({
     <div>
       <v-alert 
         v-if="successMessage" 
-        title="Success!" 
         type="success" 
         variant="tonal" 
         density="compact" 
@@ -30,7 +29,6 @@ const props = defineProps({
   
       <v-alert 
         v-if="errorMessage" 
-        title="Ooops!" 
         type="error" 
         variant="tonal" 
         density="compact" 

@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { supabase, formActionDefault } from '@/utils/supabase';
 import AlertNotification from '../common/AlertNotification.vue';
 import { useRouter } from 'vue-router';
+import LandingPage from '@/views/system/LandingPage.vue';
 
 const visible = ref(false);
 const visible2 = ref(false);
@@ -49,21 +50,25 @@ const refVForm = ref()
         first_name: formData.value.first_name,
         last_name: formData.value.last_name,
         phone: formData.value.phone_number, // Ensure this matches
+        agreement: true,
+        isAdmin : false,
       }
     }
-  });
+  })
 
   if (error) {
     console.log(error);
-    formAction.value.formErrorMessage = error.message;
+    formAction.value.formErrorMessage = "Registration failed. Try again later.";
+    formAction.value.formStatus = error.status
+
   } else if (data) {
     console.log(data);
-    formAction.value.formSuccessMessage = "Registered Successfully";
+    formAction.value.formSuccessMessage = "Registered Successfully! Redirecting...";
 
     // Can be change to session based redirection(as on video)
     setTimeout(() => {
-        router.push('/dashboard'); 
-      }, 3000);
+       router.replace('/dashboard') //change route if dashboardview is created
+      }, 2000);
   }
 
   formAction.value.formProcess = false;
@@ -84,25 +89,26 @@ const resetForm = () => {
 </script>
 
 <template>
-  <v-card
-    class="mx-auto mt-16 mb-10"
+  <v-container fill-height>
+      <v-row justify="center" align="center">
+        <v-card
+        elevation="8"
+    class="mx-auto"
     style="max-width: 450px;"
   >
 
     <!-- Form Header -->
     <v-toolbar
-      color="orange"
-      cards
       dark
       flat
     >
+    <RouterLink to="/login" class="icon-link ml-2">
       <v-btn icon>
-        <RouterLink to="/">
-          <v-icon color="black">mdi-arrow-left</v-icon>
-        </RouterLink>
-      </v-btn>
-      <v-card-title class="text-h6 font-weight-regular">
-        Sign up
+          <v-icon class="hover-icon">mdi-arrow-left</v-icon>
+        </v-btn>
+      </RouterLink>
+      <v-card-title class="text-h6 font-weight-regular ">
+        Create Your Account
       </v-card-title>
       
     </v-toolbar>
@@ -177,28 +183,28 @@ const resetForm = () => {
     variant="outlined"
   ></v-text-field>
       <v-checkbox
-        v-model="formData.agreement"
-        :rules="[requiredValidator]"
-        color="orange"
-      >
-        <template v-slot:label>
-          I agree to the&nbsp;
-          <a
-            href="#"
-            @click.stop.prevent="dialog = true"
-          >Terms of Service</a>
-          &nbsp;and&nbsp;
-          <a
-            href="#"
-            @click.stop.prevent="dialog2 = true"
-          >Privacy Policy</a>*
-        </template>
-      </v-checkbox>
+  v-model="formData.agreement"
+  :rules="[requiredValidator]"
+  color="orange"
+  
+>
+  <template v-slot:label>
+    <div style="display: flex; flex-direction: column; text-align: left;">
+      <span>
+        I agree to the&nbsp;
+        <a href="#" @click.stop.prevent="dialog = true">Terms of Service</a>
+        &nbsp;and&nbsp;
+        <a href="#" @click.stop.prevent="dialog2 = true">Privacy Policy</a>*
+      </span>
+    </div>
+  </template>
+</v-checkbox>
     
     <v-card-actions>
       <v-btn
-        variant="text"
+        variant="plain"
         @click="resetForm"
+        color="grey"
       >
         Clear
       </v-btn>
@@ -286,4 +292,21 @@ const resetForm = () => {
     </v-form>
     <!-- End of Form Section -->
   </v-card>
+      </v-row>
+  </v-container>
 </template>
+
+<style scoped>
+.icon-link {
+  display: inline-block; /* Makes the link behave like a block for hover effect */
+}
+
+.hover-icon {
+  color: black; /* Default color */
+  transition: color 0.3s; /* Smooth transition for color change */
+}
+
+.icon-link:hover .hover-icon {
+  color: orange; /* Change color to orange on hover */
+}
+</style>
