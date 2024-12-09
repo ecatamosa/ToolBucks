@@ -223,69 +223,101 @@ const resetForm = () => {
 
     <!-- Dialog1 -->
     <v-dialog
-      v-model="dialog"
-      max-width="400"
-      persistent
+    v-model="dialog"
     >
-      <v-card>
-        <v-card-title class="text-h5 bg-grey-lighten-3">
-          Terms and Conditions
-        </v-card-title>
-        <v-card-text>
-          pre? wala pani sulod pre char2 lang sa ni. tiwas sa diha code pre hahahaha
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn
-            variant="text"
-            @click="agreement = false, dialog = false"
-          >
-            Confirm
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="orange"
-            variant="tonal"
-            @click="agreement = true, dialog = false"
-          >
-            Yes
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <v-sheet
+    
+    border="md"
+    class="pa-7 text-white mx-auto"
+    color="#141518"
+    max-width="400"
+  >
+  <h4 class="text-h5 font-weight-bold mb-4">Terms of Service</h4>
+
+<p class="mb-8">
+  By using our services, you agree to the following terms. We may collect personal data, including your name, email, device information, and usage data through cookies.
+</p>
+
+<p class="mb-8">
+  Your privacy is important to us. Please review our <a class="text-red-darken-2" href="#">Privacy Policy</a> to understand how we handle your information.
+</p>
+
+<p class="mb-8">
+  By using our app, you acknowledge that you have read and agreed to these terms. If you have questions, feel free to contact us.
+</p>
+
+    <v-btn
+      class="text-none text-black mb-4"
+      color="orange-darken-2"
+      size="x-large"
+      variant="flat"
+      @click="agreement = true, dialog = false"
+      block
+    >
+      Accept
+    </v-btn>
+
+    <v-btn
+      class="text-none text-black"
+      color="orange"
+      size="x-large"
+      variant="outlined"
+      @click="agreement = false, dialog = false"
+      block
+    >
+      Decline
+    </v-btn>
+  </v-sheet>
     </v-dialog>
     <!-- End of Dialog1 -->
 
     <!-- Dialog 2 -->
     <v-dialog
-      v-model="dialog2"
-      max-width="400"
-      persistent
+    v-model="dialog2"
     >
-      <v-card>
-        <v-card-title class="text-h5 bg-grey-lighten-3">
-          Privacy Policy
-        </v-card-title>
-        <v-card-text>
-          wala pa lage pre hahahahaha
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn
-            variant="text"
-            @click="agreement2 = false, dialog2 = false"
-          >
-            Confirm
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="orange"
-            variant="tonal"
-            @click="agreement2 = true, dialog2 = false"
-          >
-            Yes
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <v-sheet
+    
+    border="md"
+    class="pa-6 text-white mx-auto"
+    color="#141518"
+    max-width="400"
+  >
+  <h4 class="text-h5 font-weight-bold mb-4">Privacy Policy</h4>
+
+<p class="mb-8">
+  We respect your privacy. This policy outlines how we collect and use your personal information with ToolBucks.
+</p>
+
+<p class="mb-8">
+  We may collect data like your name, email, phone number, and device information to enhance our services. We do not share your information with third parties without your consent.
+</p>
+
+<p class="mb-8">
+  By using our app, you agree to our data practices. For questions, please contact us.
+</p>
+
+    <v-btn
+      class="text-none text-black mb-4"
+      color="orange-darken-2"
+      size="x-large"
+      variant="flat"
+      @click="agreement2 = true, dialog2 = false"
+      block
+    >
+      Accept
+    </v-btn>
+
+    <v-btn
+      class="text-none text-black"
+      color="orange"
+      size="x-large"
+      variant="outlined"
+      @click="agreement2 = false, dialog2 = false"
+      block
+    >
+      Decline
+    </v-btn>
+  </v-sheet>
     </v-dialog>
     <!-- End of Dialog 2 -->
 
