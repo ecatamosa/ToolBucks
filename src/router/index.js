@@ -13,6 +13,7 @@ const router = createRouter({
   routes: [
     {
       path: '/', // Default route
+
       name: 'landingpage',
       component: LandingPage,
       meta: { requiresAuth: false },
