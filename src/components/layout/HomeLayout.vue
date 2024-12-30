@@ -1,9 +1,11 @@
 <script setup>
-import { RouterLink } from 'vue-router';
-import { defineProps } from 'vue';
-import SideNavigation from './navigation/SideNavigation.vue';
-
+import { ref, onMounted } from 'vue'
+import { RouterLink } from 'vue-router'
+import { defineProps } from 'vue'
+import SideNavigation from './navigation/SideNavigation.vue'
 import { shallowRef } from 'vue'
+import { supabase } from '@/utils/supabase'
+import { useRouter } from 'vue-router'
 
 const selection = shallowRef(2) //each product
 const props = defineProps({
@@ -19,482 +21,200 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+})
 
-});
+const tools = ref([])
 
+const fetchTools = async () => {
+  try {
+    const { data, error } = await supabase.from('tools').select('*')
+
+    if (error) {
+      console.error('Error fetching tools:', error)
+    } else {
+      tools.value = data.map((tool) => {
+        const fileName = tool.img
+        const imageUrl = `${fileName}`
+        console.log('Tool image URL:', {
+          fileName,
+          imageUrl,
+          originalTool: tool,
+        })
+        return {
+          ...tool,
+          img: imageUrl,
+        }
+      })
+    }
+  } catch (error) {
+    console.error('Unexpected error fetching tools:', error)
+  }
+}
+
+// const uploadToolImage = async (file) => {
+//   const fileName = `tool_${Date.now()}`
+//   try {
+//     const { data, error } = await supabase.storage.from('tools').upload(fileName, file, {
+//       cacheControl: '3600',
+//       upsert: true,
+//     })
+
+//     if (error) throw error
+
+//     const imageUrl = `https://qnsqubcldmsisdjydoid.supabase.co/storage/v1/object/public/tools/public/${fileName}`
+//     console.log('Tool image uploaded successfully:', imageUrl)
+//     return imageUrl
+//   } catch (error) {
+//     console.error('Error uploading tool image:', error)
+//     alert('Failed to upload tool image.')
+//     return null
+//   }
+// }
+
+onMounted(() => {
+  fetchTools()
+})
 
 const slides = [
-'images/slide1.png',
-'images/slide2.png',
-'images/slide3.png',
-'images/slide4.png',
-'images/slide5.png',
+  'images/slide1.png',
+  'images/slide2.png',
+  'images/slide3.png',
+  'images/slide4.png',
+  'images/slide5.png',
 ]
 
+const loading = ref(false)
+const router = useRouter()
 
+const addToCart = async (toolId) => {
+  loading.value = true
+  const userId = localStorage.getItem('user_id')
+
+  try {
+    const { error } = await supabase.from('carts').insert([{ user_id: userId, tool_id: toolId }])
+
+    if (error) {
+      console.error('Error adding to cart:', error)
+    } else {
+      router.push('/cart')
+    }
+  } catch (err) {
+    console.error('Unexpected error:', err)
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
-    <v-layout>
+  <v-layout>
     <v-app-bar>
-    <!-- Left: Logo -->
-    <v-img
-      src="images/translogotext.png"
-      alt="Tool Rental Logo"
-      max-height="20"
-      contain
-      class="ml-4"
-    ></v-img>
+      <v-img
+        src="images/translogotext.png"
+        alt="Tool Rental Logo"
+        max-height="20"
+        contain
+        class="ml-4"
+      ></v-img>
+      <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
+      <v-row class="justify-center" align="center" dense>
+        <v-btn variant="plain">
+          Category
+          <v-icon class="ml-2" icon="mdi-chevron-down"></v-icon>
 
-    <!-- Spacer to push the categories to the center -->
-    <v-spacer></v-spacer>
-    <v-spacer></v-spacer>
-    
-    <!-- Center: Categories -->
-    <v-row class="justify-center" align="center" dense>
-        
-    <v-btn variant="plain">
-      Category
-      <v-icon class="ml-2" icon="mdi-chevron-down"></v-icon>
+          <v-menu open-on-hover activator="parent">
+            <v-list>
+              <v-list-item v-for="i in 5" :key="i" link>
+                <v-list-item-title>Item {{ i }}</v-list-item-title>
+                <template v-slot:append>
+                  <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
+                </template>
+                <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
+                  <v-list>
+                    <v-list-item v-for="j in 5" :key="j" link>
+                      <v-list-item-title>Item {{ i }} - {{ j }}</v-list-item-title>
+                      <template v-slot:append>
+                        <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
+                      </template>
+                      <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
+                        <v-list>
+                          <v-list-item v-for="k in 5" :key="k" link>
+                            <v-list-item-title>Item {{ i }} - {{ j }} - {{ k }}</v-list-item-title>
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-btn>
+        <v-btn text variant="plain">All Tools</v-btn>
+        <RouterLink to="/rentals"><v-btn text variant="plain">Rentals</v-btn></RouterLink>
+        <v-btn text variant="plain">About</v-btn>
+        <v-btn text variant="plain">Contact</v-btn>
+      </v-row>
+      <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
+      <RouterLink v-if="showLoginButton" class="text-decoration-none text-orange" to="/login"
+        ><v-btn text color="amber-darken-3" class="mr-4" prepend-icon="mdi-account" variant="plain"
+          >Login</v-btn
+        ></RouterLink
+      >
+      <RouterLink v-if="showSearchBar" class="text-decoration-none text-orange" to=""
+        ><v-btn icon="mdi-magnify" text color="amber-darken-3" class="mr-4" variant="plain"></v-btn
+      ></RouterLink>
+      <RouterLink v-if="showSearchBar" class="text-decoration-none text-orange" to="/cart"
+        ><v-btn icon="mdi-cart" text color="amber-darken-3" class="mr-4" variant="plain"></v-btn
+      ></RouterLink>
+    </v-app-bar>
 
-      <v-menu open-on-hover activator="parent">
-        <v-list>
-          <v-list-item v-for="i in 5" :key="i" link>
-            <v-list-item-title>Item {{ i }}</v-list-item-title>
-            <template v-slot:append>
-              <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
-            </template>
+    <SideNavigation v-if="showSideNavigation"></SideNavigation>
 
-            <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
-              <v-list>
-                <v-list-item v-for="j in 5" :key="j" link>
-                  <v-list-item-title>Item {{ i }} - {{ j }}</v-list-item-title>
-                  <template v-slot:append>
-                    <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
-                  </template>
-
-                  <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
-                    <v-list>
-                      <v-list-item v-for="k in 5" :key="k" link>
-                        <v-list-item-title>Item {{ i }} - {{ j }} - {{ k }}</v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-btn>
-  
-      
-      <v-btn text variant="plain">All Tools</v-btn>
-      <v-btn text variant="plain">Rentals</v-btn>
-      <v-btn text variant="plain">About</v-btn>
-      <v-btn text variant="plain">Contact</v-btn>
-    </v-row>
-
-    <!-- Spacer to push the login button to the right -->
-    <v-spacer></v-spacer>
-
-    <!-- Right: Login Button -->
-    
-    <v-spacer></v-spacer>
-    
-      <RouterLink v-if="showLoginButton" class="text-decoration-none text-orange" to="/login"><v-btn  text color="amber-darken-3" class="mr-4" prepend-icon="mdi-account" variant="plain">Login</v-btn></RouterLink>
-      <RouterLink v-if="showSearchBar" class="text-decoration-none text-orange" to=""><v-btn icon="mdi-magnify"  text color="amber-darken-3" class="mr-4"  variant="plain"></v-btn></RouterLink>
-      <RouterLink v-if="showSearchBar" class="text-decoration-none text-orange" to=""><v-btn icon="mdi-cart"  text color="amber-darken-3" class="mr-4"   variant="plain"></v-btn></RouterLink>
-  </v-app-bar>
-
-  <!-- Side Navigation -->
-  <SideNavigation v-if="showSideNavigation" ></SideNavigation>
-
-
-      <!-- Main Content -->
-    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-
-      <v-carousel
-    height="637"
-    :show-arrows="false"
-    cycle
-    hide-delimiter-background
-  >
-    <v-carousel-item v-for="(slide, index) in slides" :key="index">
-        <v-img :src="slide" alt="Slide Image" cover></v-img>
-      </v-carousel-item>
-  </v-carousel>
-</v-main>
-
+    <v-main class="d-flex align-center justify-center" style="min-height: 300px">
+      <v-carousel height="637" :show-arrows="false" cycle hide-delimiter-background>
+        <v-carousel-item v-for="(slide, index) in slides" :key="index">
+          <v-img :src="slide" alt="Slide Image" cover></v-img>
+        </v-carousel-item>
+      </v-carousel>
+    </v-main>
   </v-layout>
 
   <v-layout>
-    <v-main >
+    <v-main>
       <v-container fluid>
         <v-row class="mt-5">
           <h1 class="ml-5">Popular Tools</h1>
-          <v-col cols="12" class="d-flex mt-10">
-
-            <v-card
-    class="mx-auto"
-    max-width="305"
-  >
-    <v-card-title>
-      <h2 class="text-h4">Tool</h2>
-
-      <v-spacer></v-spacer>
-
-      <span class="text-h6">$4.99</span>
-    </v-card-title>
-
-    <v-card-text>
-      Our company takes pride in making handmade brushes.
-      Our Tools are available in 4 different bristel types, from extra soft to hard.
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <span class="subheading">Select type</span>
-
-      <v-chip-group
-        v-model="selection"
-        variant="flat"
-        mandatory
-      >
-        <v-chip text="Extra Soft" border></v-chip>
-        <v-chip text="Soft" border></v-chip>
-        <v-chip text="Medium" border></v-chip>
-        <v-chip text="Hard" border></v-chip>
-      </v-chip-group>
-    </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-darken-3"
-        text="Add to Cart"
-        variant="flat"
-        block
-      ></v-btn>
-    </v-card-actions>
+          <v-col cols="3" class="d-flex mt-10" v-for="tool in tools" :key="tool.id">
+            <v-card class="mx-auto" max-width="305">
+              <v-img :src="tool.img" alt="Tool Image" max-height="200" contain></v-img>
+              <v-card-title>
+                <h2 class="text-h4">{{ tool.name }}</h2>
+                <v-spacer></v-spacer>
+                <span class="text-h6">${{ tool.price }}</span>
+              </v-card-title>
+              <v-card-text>
+                {{ tool.description }}
+              </v-card-text>
+              <v-divider class="mx-4"></v-divider>
+              <v-card-actions>
+                <v-btn
+                  :loading="loading"
+                  :disabled="loading"
+                  @click="addToCart(tool.id)"
+                  color="orange-darken-3"
+                  variant="flat"
+                  block
+                >
+                  Add to Cart
+                </v-btn>
+              </v-card-actions>
             </v-card>
-
-            <v-card
-    class="mx-auto"
-    max-width="305"
-  >
-    <v-card-title>
-      <h2 class="text-h4">Tool</h2>
-
-      <v-spacer></v-spacer>
-
-      <span class="text-h6">$4.99</span>
-    </v-card-title>
-
-    <v-card-text>
-      Our company takes pride in making handmade brushes.
-      Our Tools are available in 4 different bristel types, from extra soft to hard.
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <span class="subheading">Select type</span>
-
-      <v-chip-group
-        v-model="selection"
-        variant="flat"
-        mandatory
-      >
-        <v-chip text="Extra Soft" border></v-chip>
-        <v-chip text="Soft" border></v-chip>
-        <v-chip text="Medium" border></v-chip>
-        <v-chip text="Hard" border></v-chip>
-      </v-chip-group>
-    </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-darken-3"
-        text="Add to Cart"
-        variant="flat"
-        block
-      ></v-btn>
-    </v-card-actions>
-            </v-card>
-            
-            <v-card
-    class="mx-auto"
-    max-width="305"
-  >
-    <v-card-title>
-      <h2 class="text-h4">Tool</h2>
-
-      <v-spacer></v-spacer>
-
-      <span class="text-h6">$4.99</span>
-    </v-card-title>
-
-    <v-card-text>
-      Our company takes pride in making handmade brushes.
-      Our Tools are available in 4 different bristel types, from extra soft to hard.
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <span class="subheading">Select type</span>
-
-      <v-chip-group
-        v-model="selection"
-        variant="flat"
-        mandatory
-      >
-        <v-chip text="Extra Soft" border></v-chip>
-        <v-chip text="Soft" border></v-chip>
-        <v-chip text="Medium" border></v-chip>
-        <v-chip text="Hard" border></v-chip>
-      </v-chip-group>
-    </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-darken-3"
-        text="Add to Cart"
-        variant="flat"
-        block
-      ></v-btn>
-    </v-card-actions>
-            </v-card>
-            
-            <v-card
-    class="mx-auto"
-    max-width="305"
-  >
-    <v-card-title>
-      <h2 class="text-h4">Tool</h2>
-
-      <v-spacer></v-spacer>
-
-      <span class="text-h6">$4.99</span>
-    </v-card-title>
-
-    <v-card-text>
-      Our company takes pride in making handmade brushes.
-      Our Tools are available in 4 different bristel types, from extra soft to hard.
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <span class="subheading">Select type</span>
-
-      <v-chip-group
-        v-model="selection"
-        variant="flat"
-        mandatory
-      >
-        <v-chip text="Extra Soft" border></v-chip>
-        <v-chip text="Soft" border></v-chip>
-        <v-chip text="Medium" border></v-chip>
-        <v-chip text="Hard" border></v-chip>
-      </v-chip-group>
-    </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-darken-3"
-        text="Add to Cart"
-        variant="flat"
-        block
-      ></v-btn>
-    </v-card-actions>
-            </v-card>
-
-          </v-col> 
-
-          <!-- 2nd row -->
-          <v-col cols="12" class="d-flex">
-            <v-card
-    class="mx-auto"
-    max-width="305"
-  >
-    <v-card-title>
-      <h2 class="text-h4">Tool</h2>
-
-      <v-spacer></v-spacer>
-
-      <span class="text-h6">$4.99</span>
-    </v-card-title>
-
-    <v-card-text>
-      Our company takes pride in making handmade brushes.
-      Our Tools are available in 4 different bristel types, from extra soft to hard.
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <span class="subheading">Select type</span>
-
-      <v-chip-group
-        v-model="selection"
-        variant="flat"
-        mandatory
-      >
-        <v-chip text="Extra Soft" border></v-chip>
-        <v-chip text="Soft" border></v-chip>
-        <v-chip text="Medium" border></v-chip>
-        <v-chip text="Hard" border></v-chip>
-      </v-chip-group>
-    </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-darken-3"
-        text="Add to Cart"
-        variant="flat"
-        block
-      ></v-btn>
-    </v-card-actions>
-            </v-card>
-
-            <v-card
-    class="mx-auto"
-    max-width="305"
-  >
-    <v-card-title>
-      <h2 class="text-h4">Tool</h2>
-
-      <v-spacer></v-spacer>
-
-      <span class="text-h6">$4.99</span>
-    </v-card-title>
-
-    <v-card-text>
-      Our company takes pride in making handmade brushes.
-      Our Tools are available in 4 different bristel types, from extra soft to hard.
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <span class="subheading">Select type</span>
-
-      <v-chip-group
-        v-model="selection"
-        variant="flat"
-        mandatory
-      >
-        <v-chip text="Extra Soft" border></v-chip>
-        <v-chip text="Soft" border></v-chip>
-        <v-chip text="Medium" border></v-chip>
-        <v-chip text="Hard" border></v-chip>
-      </v-chip-group>
-    </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-darken-3"
-        text="Add to Cart"
-        variant="flat"
-        block
-      ></v-btn>
-    </v-card-actions>
-            </v-card>
-
-            <v-card
-    class="mx-auto"
-    max-width="305"
-  >
-    <v-card-title>
-      <h2 class="text-h4">Tool</h2>
-
-      <v-spacer></v-spacer>
-
-      <span class="text-h6">$4.99</span>
-    </v-card-title>
-
-    <v-card-text>
-      Our company takes pride in making handmade brushes.
-      Our Tools are available in 4 different bristel types, from extra soft to hard.
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <span class="subheading">Select type</span>
-
-      <v-chip-group
-        v-model="selection"
-        variant="flat"
-        mandatory
-      >
-        <v-chip text="Extra Soft" border></v-chip>
-        <v-chip text="Soft" border></v-chip>
-        <v-chip text="Medium" border></v-chip>
-        <v-chip text="Hard" border></v-chip>
-      </v-chip-group>
-    </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-darken-3"
-        text="Add to Cart"
-        variant="flat"
-        block
-      ></v-btn>
-    </v-card-actions>
-            </v-card>
-
-            <v-card
-    class="mx-auto"
-    max-width="305"
-  >
-    <v-card-title>
-      <h2 class="text-h4">Tool</h2>
-
-      <v-spacer></v-spacer>
-
-      <span class="text-h6">$4.99</span>
-    </v-card-title>
-
-    <v-card-text>
-      Our company takes pride in making handmade brushes.
-      Our Tools are available in 4 different bristel types, from extra soft to hard.
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <span class="subheading">Select type</span>
-
-      <v-chip-group
-        v-model="selection"
-        variant="flat"
-        mandatory
-      >
-        <v-chip text="Extra Soft" border></v-chip>
-        <v-chip text="Soft" border></v-chip>
-        <v-chip text="Medium" border></v-chip>
-        <v-chip text="Hard" border></v-chip>
-      </v-chip-group>
-    </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-darken-3"
-        text="Add to Cart"
-        variant="flat"
-        block
-      ></v-btn>
-    </v-card-actions>
-            </v-card>
-
-
           </v-col>
         </v-row>
       </v-container>
     </v-main>
-    </v-layout>
+  </v-layout>
 </template>
