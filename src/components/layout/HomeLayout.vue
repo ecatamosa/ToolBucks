@@ -152,7 +152,7 @@ const addToCart = async (toolId) => {
           </v-menu>
         </v-btn>
         <v-btn text variant="plain">All Tools</v-btn>
-        <RouterLink to="/rentals"><v-btn text variant="plain">Rentals</v-btn></RouterLink>
+        <RouterLink class="text-decoration-none text-grey-lighten-5" to="/rentals"><v-btn  text variant="plain">Rentals</v-btn></RouterLink>
         <v-btn text variant="plain">About</v-btn>
         <v-btn text variant="plain">Contact</v-btn>
       </v-row>
@@ -174,47 +174,99 @@ const addToCart = async (toolId) => {
     <SideNavigation v-if="showSideNavigation"></SideNavigation>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px">
-      <v-carousel height="637" :show-arrows="false" cycle hide-delimiter-background>
+      <v-carousel height="900" :show-arrows="false" cycle hide-delimiter-background>
         <v-carousel-item v-for="(slide, index) in slides" :key="index">
           <v-img :src="slide" alt="Slide Image" cover></v-img>
         </v-carousel-item>
       </v-carousel>
     </v-main>
   </v-layout>
-
+  
   <v-layout>
     <v-main>
       <v-container fluid>
-        <v-row class="mt-5">
-          <h1 class="ml-5">Popular Tools</h1>
-          <v-col cols="3" class="d-flex mt-10" v-for="tool in tools" :key="tool.id">
-            <v-card class="mx-auto" max-width="305">
-              <v-img :src="tool.img" alt="Tool Image" max-height="200" contain></v-img>
-              <v-card-title>
-                <h2 class="text-h4">{{ tool.name }}</h2>
-                <v-spacer></v-spacer>
-                <span class="text-h6">${{ tool.price }}</span>
-              </v-card-title>
-              <v-card-text>
-                {{ tool.description }}
-              </v-card-text>
-              <v-divider class="mx-4"></v-divider>
-              <v-card-actions>
-                <v-btn
-                  :loading="loading"
-                  :disabled="loading"
-                  @click="addToCart(tool.id)"
-                  color="orange-darken-3"
-                  variant="flat"
-                  block
-                >
-                  Add to Cart
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
+  <v-row class="mt-5">
+    <v-col cols="12">
+      <h1 class="ml-5">Featured Tools</h1>
+    </v-col>
+    <v-col
+      v-for="tool in tools"
+      :key="tool.id"
+      cols="12"
+      sm="6"
+      md="4"
+      lg="3"
+      class="d-flex"
+    >
+      <v-card class="mx-auto mb-4" max-width="305"> <!-- Adjust mb-4 for less spacing -->
+        <v-img :src="tool.img" alt="Tool Image" max-height="200" contain></v-img>
+        <v-card-title>
+          <h2 class="text-h4">{{ tool.name }}</h2>
+          <v-spacer></v-spacer>
+          <span class="text-h6">${{ tool.price }}</span>
+        </v-card-title>
+        <v-card-text>
+          {{ tool.description }}
+        </v-card-text>
+        <v-divider class="mx-4"></v-divider>
+        <v-card-actions>
+          <v-btn
+            :loading="loading"
+            :disabled="loading"
+            color="orange-darken-3"
+            variant="flat"
+            block
+            @click="addToCart(tool.id)"
+          >
+            Add to Cart
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
+  </v-row>
+
+  <v-row class="mt-5">
+    <v-col cols="12">
+      <h1 class="ml-5">Popular Tools</h1>
+    </v-col>
+    <v-col
+      v-for="tool in tools"
+      :key="tool.id"
+      cols="12"
+      sm="6"
+      md="4"
+      lg="3"
+      class="d-flex"
+    >
+      <v-card class="mx-auto mb-4" max-width="305"> <!-- Adjust mb-4 for less spacing -->
+        <v-img :src="tool.img" alt="Tool Image" max-height="200" contain></v-img>
+        <v-card-title>
+          <h2 class="text-h4">{{ tool.name }}</h2>
+          <v-spacer></v-spacer>
+          <span class="text-h6">${{ tool.price }}</span>
+        </v-card-title>
+        <v-card-text>
+          {{ tool.description }}
+        </v-card-text>
+        <v-divider class="mx-4"></v-divider>
+        <v-card-actions>
+          <v-btn
+            :loading="loading"
+            :disabled="loading"
+            color="orange-darken-3"
+            variant="flat"
+            block
+            @click="addToCart(tool.id)"
+          >
+            Add to Cart
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
+  </v-row>
+</v-container>
     </v-main>
   </v-layout>
+
+
 </template>

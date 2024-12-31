@@ -35,5 +35,6 @@ onMounted(() => {
       
       
     </v-app>
+    
   </v-responsive>
 </template>
