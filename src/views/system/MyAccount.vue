@@ -2,13 +2,7 @@
   <div>
     <h1>My Account</h1>
     <p>Welcome to your account page!</p>
-    <div class="account-details">
-      <h2>Account Details</h2>
-      <!-- Placeholder for account details -->
-      <p>Name: John Doe</p>
-      <p>Email: john.doe@example.com</p>
-      <!-- Add more account-related content here -->
-    </div>
+    <!-- Add more account-related content here -->
   </div>
 </template>
 
@@ -19,10 +13,5 @@ export default {
 </script>
 
 <style scoped>
-.account-details {
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+/* Add styles for MyAccount component here */
 </style>
