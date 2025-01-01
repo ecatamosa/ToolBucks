@@ -302,7 +302,15 @@ const addToCart = async (toolId) => {
     </div>
 
     <div style="margin-top: 20px; font-size: 14px">
-      <p>Copyright ©2024</p>
+      <a href="/">
+        <v-img
+          src="images/translogotext.png"
+          alt="Tool Rental Logo"
+          max-height="20"
+          contain
+          class="ml-4"
+        ></v-img>
+      </a>
     </div>
   </footer>
 </template>
