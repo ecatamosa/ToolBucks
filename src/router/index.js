@@ -7,6 +7,7 @@ import { isAuthenticated } from '@/utils/supabase'
 import NotFoundView from '@/views/system/error/NotFoundView.vue'
 import Cart from '@/views/system/Cart.vue'
 import Rentals from '@/views/system/Rentals.vue'
+import MyAccount from '@/views/system/MyAccount.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,6 +48,11 @@ const router = createRouter({
       name: 'dashboard',
       component: DashboardView,
       meta: { requiresAuth: true },
+    },
+    {
+      path: '/my-account',
+      name: 'MyAccount',
+      component: MyAccount,
     },
     {
       path: '/:pathMatch(.*)*', // Catch-all route for 404
