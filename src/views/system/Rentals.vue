@@ -4,8 +4,8 @@
       <v-row>
         <v-col>
           <h1 class="text-center">Rental List</h1>
-          <v-btn @click="goHome" class="mb-4 me-3" color="amber-darken-3" variant="plain"><v-icon class="hover-icon">mdi-arrow-left</v-icon>Go to Home</v-btn>
-          <RouterLink to="/cart"><v-btn class="mb-4" color="orange-darken-3">Go to Cart</v-btn></RouterLink>
+          <v-btn @click="goHome" class="mb-4 me-3" color="amber-darken-3" variant="plain"><v-icon class="hover-icon">mdi-arrow-left</v-icon> Back to Dashboard</v-btn>
+          <RouterLink to="/cart"><v-btn class="mb-4" color="amber-darken-3">Go to Cart</v-btn></RouterLink>
           <div v-if="loading">Loading...</div>
           <div v-if="tools.length === 0">No tools available.</div>
           <v-list v-else>

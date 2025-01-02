@@ -4,8 +4,8 @@
       <v-row>
         <v-col>
           <h1 class="text-center">Shopping Cart</h1>
-          <v-btn @click="goHome" class="mb-4 me-3" color="amber-darken-3" variant="plain"><v-icon class="hover-icon">mdi-arrow-left</v-icon>Go to Home</v-btn>
-          <RouterLink to="/rentals"><v-btn class="mb-4" color="orange-darken-3">Go to Rentals</v-btn></RouterLink>
+          <v-btn @click="goHome" class="mb-4 me-3" color="amber-darken-3" variant="plain"><v-icon class="hover-icon">mdi-arrow-left</v-icon> Back to Dashboard</v-btn>
+          <RouterLink to="/rentals"><v-btn class="mb-4" color="amber-darken-3">Go to Rentals</v-btn></RouterLink>
           <div v-if="loading">Loading...</div>
           <v-row>
             <v-col v-for="cart in carts" :key="cart.id" cols="12" md="6" lg="4">

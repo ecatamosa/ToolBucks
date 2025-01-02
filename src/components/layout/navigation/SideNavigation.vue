@@ -122,7 +122,7 @@ const onLogout = async () => {
                 {{ user ? user.email : 'No email available' }}
               </p>
               <v-divider class="my-3"></v-divider>
-              <v-btn variant="text" rounded> Edit Account </v-btn>
+              <RouterLink class="text-grey" to="/editprofile"><v-btn variant="text" rounded> Edit Account </v-btn></RouterLink>
             </div>
           </v-card-text>
         </v-card>

@@ -8,6 +8,7 @@ import NotFoundView from '@/views/system/error/NotFoundView.vue'
 import Cart from '@/views/system/Cart.vue'
 import Rentals from '@/views/system/Rentals.vue'
 import MyAccount from '@/views/system/MyAccount.vue'
+import EditprofileView from '@/views/system/EditprofileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,6 +54,12 @@ const router = createRouter({
       path: '/my-account',
       name: 'MyAccount',
       component: MyAccount,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/editprofile',
+      name: 'editprofile',
+      component: EditprofileView,
       meta: { requiresAuth: true },
     },
     {
