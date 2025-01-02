@@ -8,6 +8,7 @@ import { supabase } from '@/utils/supabase'
 import { useRouter } from 'vue-router'
 
 const selection = shallowRef(2) //each product
+const rating = ref(4.5)
 const props = defineProps({
   showLoginButton: {
     type: Boolean,
@@ -85,6 +86,8 @@ const addToCart = async (toolId) => {
     loading.value = false
   }
 }
+
+
 </script>
 
 <template>
@@ -133,9 +136,6 @@ const addToCart = async (toolId) => {
           </v-menu>
         </v-btn>
         <v-btn text variant="plain">All Tools</v-btn>
-        <RouterLink class="text-decoration-none text-grey-lighten-5" to="/rentals"
-          ><v-btn text variant="plain">Rentals</v-btn></RouterLink
-        >
         <v-btn text variant="plain">About</v-btn>
         <v-btn text variant="plain">Contact</v-btn>
       </v-row>
@@ -169,37 +169,60 @@ const addToCart = async (toolId) => {
     <v-main>
       <v-container fluid>
         <v-row class="mt-5">
-          <v-col cols="12">
-            <h1 class="ml-5">Featured Tools</h1>
-          </v-col>
-          <v-col v-for="tool in tools" :key="tool.id" cols="12" sm="6" md="4" lg="3" class="d-flex">
-            <v-card class="mx-auto mb-4" max-width="305">
-              <!-- Adjust mb-4 for less spacing -->
-              <v-img :src="tool.img" alt="Tool Image" max-height="200" contain></v-img>
-              <v-card-title>
-                <h2 class="text-h4">{{ tool.name }}</h2>
-                <v-spacer></v-spacer>
-                <span class="text-h6">${{ tool.price }}</span>
-              </v-card-title>
-              <v-card-text>
+    <v-col cols="12">
+      <h1 class="ml-5">Featured Tools</h1>
+    </v-col>
+    <v-col v-for="tool in tools" :key="tool.id" cols="12" sm="6" md="4" lg="3" class="d-flex mx-auto">
+      <v-card class="mx-auto mb-4 fixed-height" max-width="305">
+        <v-img :src="tool.img" alt="Tool Image" max-height="176" contain></v-img>
+        <v-card-title>
+          <h2 class="text-h4">{{ tool.name }}</h2>
+          <v-spacer></v-spacer>
+          <span class="text-h6">${{ tool.price }}</span>
+
+          <!-- <v-spacer></v-spacer>
+          <span class="text-grey-lighten-2 text-caption me-2">
+          ({{ rating }})
+          </span>
+          <v-rating
+            v-model="rating"
+            active-color="yellow-accent-4"
+            color="white"
+            size="25"
+            half-increments
+            hover
+          ></v-rating> -->
+        </v-card-title>
+
+        <v-card-text>
                 {{ tool.description }}
               </v-card-text>
-              <v-divider class="mx-4"></v-divider>
-              <v-card-actions>
-                <v-btn
-                  :loading="loading"
-                  :disabled="loading"
-                  color="orange-darken-3"
-                  variant="flat"
-                  block
-                  @click="addToCart(tool.id)"
-                >
-                  Add to Cart
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
+        <v-divider class="mx-4"></v-divider>
+        <v-chip-group
+        v-model="selection"
+        variant="flat"
+        mandatory
+      >
+        <v-chip text="DeWalt" border></v-chip>
+        <v-chip text="Bosch" border></v-chip>
+        <v-chip text="Makita" border></v-chip>
+        <v-chip text="Milwaukee" border></v-chip>
+      </v-chip-group>
+        <v-card-actions>
+          <v-btn
+            :loading="loading"
+            :disabled="loading"
+            color="orange-darken-3"
+            variant="flat"
+            block
+            @click="addToCart(tool.id)"
+          >
+            Add to Cart
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
+  </v-row>
 
         <v-row class="mt-5">
           <v-col cols="12">
@@ -295,3 +318,15 @@ const addToCart = async (toolId) => {
     </div>
   </footer>
 </template>
+
+<style scoped>
+.fixed-height {
+  height: 427px; /* Adjust height based on your content */
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+</style>
