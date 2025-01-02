@@ -1,80 +1,85 @@
 <template>
   <div>
-    <h1>Rental List</h1>
-    <div v-if="tools.length === 0">No tools available.</div>
-    <ul v-else>
-      <li v-for="tool in tools" :key="tool.id">
-        <h2>{{ tool.name }}</h2>
-        <p>Status: {{ tool.purchased ? 'Purchased' : 'Not Purchased' }}</p>
-        <!-- Add more tool details as needed -->
-      </li>
-    </ul>
+    <v-container>
+      <v-row>
+        <v-col>
+          <h1 class="text-center">Rental List</h1>
+          <v-btn @click="goHome" class="mb-4 me-3" color="amber-darken-3" variant="plain"><v-icon class="hover-icon">mdi-arrow-left</v-icon>Go to Home</v-btn>
+          <RouterLink to="/cart"><v-btn class="mb-4" color="orange-darken-3">Go to Cart</v-btn></RouterLink>
+          <div v-if="loading">Loading...</div>
+          <div v-if="tools.length === 0">No tools available.</div>
+          <v-list v-else>
+            <v-list-item-group>
+              <v-list-item v-for="tool in tools" :key="tool.id">
+                <v-list-item-content>
+                  <v-list-item-title>{{ tool.name }}</v-list-item-title>
+                  <v-list-item-subtitle>
+                    Status: {{ tool.purchased ? 'Rented' : 'Not Rented' }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
 import { supabase } from '@/utils/supabase'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'RentalList',
   data() {
     return {
       tools: [],
+      loading: true,
     }
+  },
+  setup() {
+    const router = useRouter()
+    return { router }
   },
   methods: {
     async fetchToolsAndCarts() {
-      try {
-        const userId = localStorage.getItem('user_id')
-        if (!userId) {
-          throw new Error('User ID not found in localStorage')
-        }
+      const userId = localStorage.getItem('user_id')
+      const { data: carts, error: cartsError } = await supabase
+        .from('carts')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('purchased', true);
+      if (cartsError) throw cartsError;
 
-        // Fetch carts for the specific user
-        const { data: carts, error: cartsError } = await supabase
-          .from('carts')
-          .select('*')
-          .eq('user_id', userId)
-          .eq('purchased', true)
-        if (cartsError) throw cartsError
+      const cartToolIds = carts.map(cart => cart.tool_id);
+      const { data: tools, error: toolsError } = await supabase
+        .from('tools')
+        .select('*')
+        .in('id', cartToolIds);
+      if (toolsError) throw toolsError;
 
-        const cartToolIds = carts.map((cart) => cart.tool_id)
-
-        // Fetch tools that are in the user's cart
-        const { data: tools, error: toolsError } = await supabase
-          .from('tools')
-          .select('*')
-          .in('id', cartToolIds)
-        if (toolsError) throw toolsError
-
-        // Attach purchased status to tools
-        this.tools = tools.map((tool) => {
-          const cart = carts.find((cart) => cart.tool_id === tool.id)
-          return { ...tool, purchased: cart ? cart.purchased : false }
-        })
-      } catch (error) {
-        console.error('Error fetching tools and carts:', error)
-      }
+      this.tools = tools.map(tool => {
+        const cart = carts.find(cart => cart.tool_id === tool.id);
+        return { ...tool, purchased: cart ? cart.purchased : false };
+      });
     },
+    goHome() {
+      this.router.push('/')
+    },
+    
   },
   mounted() {
-    this.fetchToolsAndCarts()
+    this.fetchToolsAndCarts();
+    this.loading = false;
   },
+
+  
 }
 </script>
 
 <style scoped>
-h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
+.text-center {
+  text-align: center;
 }
 </style>

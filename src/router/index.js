@@ -53,6 +53,7 @@ const router = createRouter({
       path: '/my-account',
       name: 'MyAccount',
       component: MyAccount,
+      meta: { requiresAuth: true },
     },
     {
       path: '/:pathMatch(.*)*', // Catch-all route for 404

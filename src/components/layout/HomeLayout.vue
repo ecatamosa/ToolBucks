@@ -51,25 +51,6 @@ const fetchTools = async () => {
   }
 }
 
-// const uploadToolImage = async (file) => {
-//   const fileName = `tool_${Date.now()}`
-//   try {
-//     const { data, error } = await supabase.storage.from('tools').upload(fileName, file, {
-//       cacheControl: '3600',
-//       upsert: true,
-//     })
-
-//     if (error) throw error
-
-//     const imageUrl = `https://qnsqubcldmsisdjydoid.supabase.co/storage/v1/object/public/tools/public/${fileName}`
-//     console.log('Tool image uploaded successfully:', imageUrl)
-//     return imageUrl
-//   } catch (error) {
-//     console.error('Error uploading tool image:', error)
-//     alert('Failed to upload tool image.')
-//     return null
-//   }
-// }
 
 onMounted(() => {
   fetchTools()
@@ -176,7 +157,7 @@ const addToCart = async (toolId) => {
     <SideNavigation v-if="showSideNavigation"></SideNavigation>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px">
-      <v-carousel height="900" :show-arrows="false" cycle hide-delimiter-background>
+      <v-carousel height="650" :show-arrows="false" cycle hide-delimiter-background>
         <v-carousel-item v-for="(slide, index) in slides" :key="index">
           <v-img :src="slide" alt="Slide Image" cover></v-img>
         </v-carousel-item>
