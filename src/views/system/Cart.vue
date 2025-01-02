@@ -16,7 +16,7 @@
                   <div>{{ cart.description }}</div>
                 </v-card-subtitle>
                 <v-card-actions>
-                  <v-btn v-if="!cart.purchased" @click="purchaseTool(cart.tool_id)" color="success">Rent</v-btn>
+                  <v-btn v-if="!cart.purchased" @click="purchaseTool(cart.tool_id)" color="amber-darken-3">Rent</v-btn>
                   <v-btn v-else disabled color="grey">Rented</v-btn>
                   <v-btn @click="deleteTool(cart.id)" color="red"><v-icon>mdi-delete</v-icon></v-btn>
                 </v-card-actions>
