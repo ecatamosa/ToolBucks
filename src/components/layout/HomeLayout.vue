@@ -54,8 +54,21 @@ const fetchTools = async () => {
 
 
 onMounted(() => {
-  fetchTools()
+  fetchTools(),
+  fetchCategories()
 })
+
+const categories = ref([])
+
+const fetchCategories = async () => {
+  const { data, error } = await supabase.from('categories').select('*')
+
+  if (error) {
+    console.error('Error fetching categories:', error)
+  } else {
+    categories.value = data
+  }
+}
 
 const slides = [
   'images/slide1.png',
@@ -87,6 +100,50 @@ const addToCart = async (toolId) => {
   }
 }
 
+// Static tools data
+const ftools = ref([
+  {
+    id: '3',
+    img: '/images/impact2.png',
+    name: 'Impact Drill',
+    price: 8.00,
+    description: 'Powerful, versatile tool designed for both professional and DIY use.',
+    rating: 5.0,
+  },
+  {
+    id: '1',
+    img: '/images/grinder1.png',
+    name: 'Grinder',
+    price: 7.49,
+    description: 'Versatile tool designed for cutting and polishing a variety of materials.',
+    rating: 4.5,
+  },
+  {
+    id: '4',
+    img: '/images/shovel1.png',
+    name: 'Shovel',
+    price: 2.00,
+    description: 'For both amateur gardeners and professional landscapers.',
+    rating: 4.0,
+  },
+  {
+    id: '2',
+    img: '/images/hammer1.png',
+    name: 'Hammer',
+    price: 3.00,
+    description: 'Essential tool designed for driving nails and performing various tasks.',
+    rating: 4.0,
+  },
+  // Add more static tools as needed
+])
+
+// Scroll to All Tools Section
+const scrollToAllTools = () => {
+  const section = document.getElementById('all-tools-section');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 
 </script>
 
@@ -104,38 +161,23 @@ const addToCart = async (toolId) => {
       <v-spacer></v-spacer>
       <v-row class="justify-center" align="center" dense>
         <v-btn variant="plain">
-          Category
-          <v-icon class="ml-2" icon="mdi-chevron-down"></v-icon>
+    Category
+    <v-icon class="ml-2" icon="mdi-chevron-down"></v-icon>
 
-          <v-menu open-on-hover activator="parent">
-            <v-list>
-              <v-list-item v-for="i in 5" :key="i" link>
-                <v-list-item-title>Item {{ i }}</v-list-item-title>
-                <template v-slot:append>
-                  <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
-                </template>
-                <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
-                  <v-list>
-                    <v-list-item v-for="j in 5" :key="j" link>
-                      <v-list-item-title>Item {{ i }} - {{ j }}</v-list-item-title>
-                      <template v-slot:append>
-                        <v-icon icon="mdi-menu-right" size="x-small"></v-icon>
-                      </template>
-                      <v-menu :open-on-focus="false" activator="parent" open-on-hover submenu>
-                        <v-list>
-                          <v-list-item v-for="k in 5" :key="k" link>
-                            <v-list-item-title>Item {{ i }} - {{ j }} - {{ k }}</v-list-item-title>
-                          </v-list-item>
-                        </v-list>
-                      </v-menu>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-btn>
-        <v-btn text variant="plain">All Tools</v-btn>
+    <v-menu open-on-hover activator="parent">
+      <v-list>
+        <v-list-item v-for="category in categories" :key="category.id" link>
+          <v-tooltip :open-on-hover="true" :close-on-content-click="false">
+            <template #activator="{ props }">
+              <v-list-item-title v-bind="props">{{ category.category_name }}</v-list-item-title>
+            </template>
+            <span>{{ category.description }}</span> <!-- Tooltip content -->
+          </v-tooltip>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </v-btn>
+        <v-btn text variant="plain" @click="scrollToAllTools">All Tools</v-btn>
         <v-btn text variant="plain">About</v-btn>
         <v-btn text variant="plain">Contact</v-btn>
       </v-row>
@@ -169,8 +211,54 @@ const addToCart = async (toolId) => {
     <v-main>
       <v-container fluid>
         <v-row class="mt-5">
-    <v-col cols="12">
-      <h1 class="ml-5">Featured Tools</h1>
+          <v-col cols="12">
+            <h1 class="ml-5">Popular Tools</h1>
+          </v-col>
+          <v-col v-for="tool in ftools" :key="tool.id" cols="12" sm="6" md="4" lg="3" class="d-flex mx-auto">
+            <v-card class="mx-auto mb-4 fixed-height" max-width="305">
+              <v-img :src="tool.img" alt="Tool Image" max-height="176" contain></v-img>
+              <v-card-title>
+                <h2 class="text-h4">{{ tool.name }}</h2>
+                <v-spacer></v-spacer>
+                <span class="text-h6">${{ tool.price }}</span>
+              </v-card-title>
+
+              <v-card-text>
+                {{ tool.description }}
+              </v-card-text>
+              <v-divider class="mx-4"></v-divider>
+
+              <div class="d-flex align-center ml-4">
+                <v-rating
+                  readonly
+                  v-model="tool.rating"
+                  active-color="amber-darken-3"
+                  color="grey lighten-2"
+                  size="18"
+                  half-increments
+                ></v-rating>
+                <span class="ml-2 text-caption">({{ tool.rating }})</span>
+              </div>
+
+              <v-card-actions>
+                <v-btn
+                  :loading="loading"
+                  :disabled="loading"
+                  color="orange-darken-3"
+                  variant="flat"
+                  block
+                  @click="addToCart(tool.id)"
+                >
+                  Add to Cart
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+
+        <v-row class="mt-5">
+    <v-col cols="12" id="all-tools-section">
+      <h1 class="ml-5">All Tools</h1>
     </v-col>
     <v-col v-for="tool in tools" :key="tool.id" cols="12" sm="6" md="4" lg="3" class="d-flex mx-auto">
       <v-card class="mx-auto mb-4 fixed-height" max-width="305">
@@ -224,38 +312,7 @@ const addToCart = async (toolId) => {
     </v-col>
   </v-row>
 
-        <v-row class="mt-5">
-          <v-col cols="12">
-            <h1 class="ml-5">Popular Tools</h1>
-          </v-col>
-          <v-col v-for="tool in tools" :key="tool.id" cols="12" sm="6" md="4" lg="3" class="d-flex">
-            <v-card class="mx-auto mb-4" max-width="305">
-              <!-- Adjust mb-4 for less spacing -->
-              <v-img :src="tool.img" alt="Tool Image" max-height="200" contain></v-img>
-              <v-card-title>
-                <h2 class="text-h4">{{ tool.name }}</h2>
-                <v-spacer></v-spacer>
-                <span class="text-h6">${{ tool.price }}</span>
-              </v-card-title>
-              <v-card-text>
-                {{ tool.description }}
-              </v-card-text>
-              <v-divider class="mx-4"></v-divider>
-              <v-card-actions>
-                <v-btn
-                  :loading="loading"
-                  :disabled="loading"
-                  color="orange-darken-3"
-                  variant="flat"
-                  block
-                  @click="addToCart(tool.id)"
-                >
-                  Add to Cart
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
+        
       </v-container>
     </v-main>
   </v-layout>
