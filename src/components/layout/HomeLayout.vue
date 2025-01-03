@@ -244,7 +244,7 @@ const filteredTools = computed(() => {
           </v-col>
           <v-col v-for="tool in ftools" :key="tool.id" cols="12" sm="6" md="4" lg="3" class="d-flex mx-auto">
             <v-card class="mx-auto mb-4 fixed-height" max-width="305">
-              <v-img :src="tool.img" alt="Tool Image" max-height="176" contain></v-img>
+              <v-img :src="tool.img" alt="Tool Image" max-height="165" contain></v-img>
               <v-card-title>
                 <h2 class="text-h4">{{ tool.name }}</h2>
                 <v-spacer></v-spacer>
@@ -290,7 +290,7 @@ const filteredTools = computed(() => {
     </v-col>
     <v-col v-for="tool in tools" :key="tool.id" cols="12" sm="6" md="4" lg="3" class="d-flex mx-auto">
       <v-card class="mx-auto mb-4 fixed-height" max-width="305">
-        <v-img :src="tool.img" alt="Tool Image" max-height="176" contain></v-img>
+        <v-img :src="tool.img" alt="Tool Image" max-height="165" contain></v-img>
         <v-card-title>
           <h2 class="text-h4">{{ tool.name }}</h2>
           <v-spacer></v-spacer>
