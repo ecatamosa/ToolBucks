@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { defineProps } from 'vue'
 import SideNavigation from './navigation/SideNavigation.vue'
@@ -8,7 +8,6 @@ import { supabase } from '@/utils/supabase'
 import { useRouter } from 'vue-router'
 
 const selection = shallowRef(2) //each product
-const rating = ref(4.5)
 const props = defineProps({
   showLoginButton: {
     type: Boolean,
@@ -51,6 +50,8 @@ const fetchTools = async () => {
     console.error('Unexpected error fetching tools:', error)
   }
 }
+
+
 
 
 onMounted(() => {
@@ -145,7 +146,30 @@ const scrollToAllTools = () => {
   }
 }
 
+// Add search functionality
+// The following variable holds the current search input
+const searchQuery = ref('') // Holds the current search input
+
+// Function to clear the search input
+const clearSearch = () => {
+  searchQuery.value = ''
+}
+
+// Computed property to filter tools based on search query
+const filteredTools = computed(() => {
+  if (!searchQuery.value) return tools.value // Return all tools if search query is empty
+  return tools.value.filter(tool =>
+    tool.name.toLowerCase().includes(searchQuery.value.toLowerCase()) // Filter based on name
+  )
+})
 </script>
+
+
+
+
+
+
+
 
 <template>
   <v-layout>
@@ -178,8 +202,8 @@ const scrollToAllTools = () => {
     </v-menu>
   </v-btn>
         <v-btn text variant="plain" @click="scrollToAllTools">All Tools</v-btn>
-        <v-btn text variant="plain">About</v-btn>
-        <v-btn text variant="plain">Contact</v-btn>
+        <RouterLink to="/about" class="text-grey-lighten-3"><v-btn text variant="plain">About</v-btn></RouterLink>
+        <RouterLink to="/contacts" class="text-grey-lighten-3"><v-btn text variant="plain">Contact</v-btn></RouterLink>
       </v-row>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
@@ -188,9 +212,13 @@ const scrollToAllTools = () => {
           >Login</v-btn
         ></RouterLink
       >
+      
       <RouterLink v-if="showSearchBar" class="text-decoration-none text-orange" to=""
         ><v-btn icon="mdi-magnify" text color="amber-darken-3" class="mr-4" variant="plain"></v-btn
       ></RouterLink>
+
+      
+
       <RouterLink v-if="showSearchBar" class="text-decoration-none text-orange" to="/cart"
         ><v-btn icon="mdi-cart" text color="amber-darken-3" class="mr-4" variant="plain"></v-btn
       ></RouterLink>

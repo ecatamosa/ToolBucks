@@ -9,6 +9,8 @@ import Cart from '@/views/system/Cart.vue'
 import Rentals from '@/views/system/Rentals.vue'
 import MyAccount from '@/views/system/MyAccount.vue'
 import EditprofileView from '@/views/system/EditprofileView.vue'
+import About from '@/views/system/About.vue'
+import Contacts from '@/views/system/Contacts.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -61,6 +63,18 @@ const router = createRouter({
       name: 'editprofile',
       component: EditprofileView,
       meta: { requiresAuth: true },
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About,
+      meta: { requiresAuth: false },
+    },
+    {
+      path: '/contacts',
+      name: 'contacts',
+      component: Contacts,
+      meta: { requiresAuth: false },
     },
     {
       path: '/:pathMatch(.*)*', // Catch-all route for 404
